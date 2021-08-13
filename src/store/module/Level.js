@@ -1,9 +1,9 @@
 const Level = {
-    namespaced: true,
-    state: {},
-    mutations: {},
-    actions: {},
-    getters: {}
-}
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+};
 
-export default Level
+export default Level;

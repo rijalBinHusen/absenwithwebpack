@@ -1,9 +1,9 @@
 const MasterIdentity = {
-    namespaced: true,
-    state: {},
-    mutations: {},
-    actions: {},
-    getters: {}
-}
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+};
 
-export default MasterIdentity
+export default MasterIdentity;

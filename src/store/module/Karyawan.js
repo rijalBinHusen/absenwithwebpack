@@ -1,9 +1,9 @@
 const Karyawan = {
-    namespaced: true,
-    state: {},
-    mutations: {},
-    actions: {},
-    getters: {}
-}
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+};
 
-export default Karyawan
+export default Karyawan;

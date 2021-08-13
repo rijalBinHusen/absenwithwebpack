@@ -1,9 +1,9 @@
 const Bagian = {
-    namespaced: true,
-    state: {},
-    mutations: {},
-    actions: {},
-    getters: {}
-}
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+};
 
-export default Bagian
+export default Bagian;

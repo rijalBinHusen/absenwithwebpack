@@ -1,14 +1,25 @@
 <template>
-  <Navbar/>
+  <Navbar />
+  <component :is="currentNav"></component>
+  <Modal />
 </template>
 
 <script>
 import Navbar from "./components/Navbar.vue";
+import Divisi from "./components/Divisi.vue";
+import Modal from "./components/Modal.vue";
 
 export default {
   name: "App",
   components: {
-   Navbar,
+    Navbar,
+    Divisi,
+    Modal,
+  },
+  computed: {
+    currentNav() {
+      return this.$store.getters["Navbar/currentNav"];
+    },
   },
 };
 </script>

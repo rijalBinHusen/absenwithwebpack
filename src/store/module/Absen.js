@@ -1,9 +1,9 @@
 const Absen = {
-    namespaced: true,
-    state: {},
-    mutations: {},
-    actions: {},
-    getters: {}
-}
+  namespaced: true,
+  state: {},
+  mutations: {},
+  actions: {},
+  getters: {},
+};
 
-export default Absen
+export default Absen;
