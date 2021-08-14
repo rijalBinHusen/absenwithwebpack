@@ -14,7 +14,6 @@
         type="submit"
         class="w3-button w3-left w3-margin-top w3-teal w3-round-large"
         value="Tambah"
-        @click="tambah"
       />
     </form>
   </div>

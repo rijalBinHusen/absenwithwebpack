@@ -37,5 +37,6 @@ export default {
       divisi: this.$store.getters["Divisi/divisi"],
     };
   },
+  computed: {},
 };
 </script>

@@ -21,6 +21,9 @@ export default {
       return this.$store.getters["Navbar/currentNav"];
     },
   },
+  created() {
+    this.$store.dispatch("Divisi/divisi");
+  },
 };
 </script>
 
