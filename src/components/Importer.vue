@@ -4,7 +4,7 @@
     <p class="w3-jumbo w3-button w3-white w3-hover-white">
       <font-awesome-icon icon="cloud-upload-alt" />
     </p>
-    <input class="" type="file" accept=".js" />
+    <input class="" @change.prevent="check($event)" type="file" accept=".js" />
     <p class="w3-xlarge">Imported :</p>
     <!-- <ul class="">
       <li :key="expor.time" v-for="expor in exportData">
@@ -28,15 +28,29 @@ export default {
     };
   },
   methods: {
-    download(fileName, contentType) {
-      this.$store.dispatch("ExIm/exportAppend");
-      var a = document.createElement("a");
-      var file = new Blob([JSON.stringify(this.toExport)], {
-        type: contentType,
-      });
-      a.href = URL.createObjectURL(file);
-      a.download = fileName;
-      a.click();
+    check(ev) {
+      //delete all record
+      // mydb.delete("users");
+
+      const reader = new FileReader();
+
+      //when reading is completed load
+      reader.onload = function (event) {
+        // file content as text
+        const text = event.target.result;
+        // handle text
+        let arr = JSON.parse(text);
+        console.log(arr);
+        // arr.map((val) => {
+        //   //add to indexeddb
+        //   if (val.id && val.name && val.password && val.location) {
+        //     // mydb.create("users", val);
+        //   }
+        // });
+      };
+
+      //read as text
+      reader.readAsText(ev.target.files[0]);
     },
     // download(jsonData, 'json.txt', 'text/plain');
   },

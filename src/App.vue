@@ -27,7 +27,7 @@ export default {
   },
   created() {
     this.$store.dispatch("Divisi/divisi");
-    this.$store.dispatch("ExIm/exportData")
+    this.$store.dispatch("ExIm/exportData");
   },
 };
 </script>
