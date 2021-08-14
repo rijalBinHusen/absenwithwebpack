@@ -31,28 +31,33 @@ export default {
     check(ev) {
       //delete all record
       // mydb.delete("users");
+      this.$store.dispatch("Modal/modalChange", {
+        mode: "Import Data",
+        id: "",
+      });
 
       const reader = new FileReader();
 
       //when reading is completed load
-      reader.onload = function (event) {
-        // file content as text
-        const text = event.target.result;
-        // handle text
-        let arr = JSON.parse(text);
-        console.log(arr);
-        // arr.map((val) => {
-        //   //add to indexeddb
-        //   if (val.id && val.name && val.password && val.location) {
-        //     // mydb.create("users", val);
-        //   }
-        // });
-      };
+      reader.onload = (event) => this.send(JSON.parse(event.target.result));
+      // file content as text
+      // const text =
+      // handle text
+      // let arr = JSON.parse(text);
+      // arr.map((val) => {
+      //   //add to indexeddb
+      //   if (val.id && val.name && val.password && val.location) {
+      //     // mydb.create("users", val);
+      //   }
+      // });
 
       //read as text
       reader.readAsText(ev.target.files[0]);
     },
-    // download(jsonData, 'json.txt', 'text/plain');
+    send(val) {
+      this.$store.dispatch("ExIm/checkImportData", val);
+      console.log(val);
+    },
   },
   computed: {},
 };

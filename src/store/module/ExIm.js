@@ -4,6 +4,7 @@ const ExIm = {
   state: {
     exportData: "",
     importData: "",
+    checkImportData: "",
   },
   mutations: {
     exportAppend(state) {
@@ -20,6 +21,9 @@ const ExIm = {
     importData(state) {
       state.importData = "";
     },
+    checkImportData(state, val) {
+      state.checkImportData = val;
+    },
   },
   actions: {
     exportAppend({ commit }) {
@@ -31,6 +35,9 @@ const ExIm = {
     importData({ commit }) {
       commit("importData");
     },
+    checkImportData({ commit }, val) {
+      commit("checkImportData", val);
+    },
   },
   getters: {
     exportData(state) {
@@ -38,6 +45,9 @@ const ExIm = {
     },
     importData(state) {
       return state.ImportData;
+    },
+    checkImportData(state) {
+      return state.checkImportData;
     },
   },
 };
