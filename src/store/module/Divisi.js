@@ -28,6 +28,7 @@ const Divisi = {
         });
     },
     update({ commit }, val) {
+      mydb.update("divisi", { id: val.id }, { name: val.name });
       commit("update", val);
     },
     divisi({ commit }) {
