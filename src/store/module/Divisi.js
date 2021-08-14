@@ -24,7 +24,9 @@ const Divisi = {
       mydb
         .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
         .then((res) => {
-          commit("tambah", { id: res[0].id + 1, name: val });
+          res[0]
+            ? commit("tambah", { id: mydb.generateId(res[0].id), name: val })
+            : commit("tambah", { id: "DIV0001", name: val });
         });
     },
     update({ commit }, val) {

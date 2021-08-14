@@ -3,13 +3,13 @@ const Navbar = {
   state: {
     currentNav: "",
     navs: [
-      { component: "Divisi", title: "Divisi", icon: "" },
-      { component: "Bagian", title: "Bagian", icon: "" },
-      { component: "Level", title: "Level", icon: "" },
-      { component: "Karyawan", title: "Karyawan", icon: "" },
-      { component: "Absen", title: "Absen", icon: "" },
-      { component: "Importer", title: "Importer", icon: "" },
-      { component: "Exporter", title: "Exporter", icon: "" },
+      { component: "Divisi", title: "Divisi", icon: "archway" },
+      { component: "Bagian", title: "Bagian", icon: "user-cog" },
+      { component: "Level", title: "Level", icon: "user" },
+      { component: "Karyawan", title: "Karyawan", icon: "address-card" },
+      { component: "Absen", title: "Absen", icon: "list" },
+      { component: "Importer", title: "Importer", icon: "file-upload" },
+      { component: "Exporter", title: "Exporter", icon: "file-download" },
     ],
   },
   mutations: {

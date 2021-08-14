@@ -8,6 +8,8 @@
 import Navbar from "./components/Navbar.vue";
 import Divisi from "./components/Divisi.vue";
 import Modal from "./components/Modal.vue";
+import Exporter from "./components/Exporter.vue";
+import Importer from "./components/Importer.vue";
 
 export default {
   name: "App",
@@ -15,6 +17,8 @@ export default {
     Navbar,
     Divisi,
     Modal,
+    Exporter,
+    Importer,
   },
   computed: {
     currentNav() {
@@ -23,6 +27,7 @@ export default {
   },
   created() {
     this.$store.dispatch("Divisi/divisi");
+    this.$store.dispatch("ExIm/exportData")
   },
 };
 </script>

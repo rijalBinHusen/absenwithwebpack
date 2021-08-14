@@ -2,6 +2,7 @@ import { createStore } from "vuex";
 import Navbar from "./module/Navbar.js";
 import Divisi from "./module/Divisi.js";
 import Modal from "./module/Modal.js";
+import ExIm from "./module/ExIm.js"
 
 export default createStore({
   state: {},
@@ -11,5 +12,6 @@ export default createStore({
     Navbar,
     Divisi,
     Modal,
+    ExIm,
   },
 });

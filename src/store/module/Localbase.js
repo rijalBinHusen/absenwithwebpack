@@ -55,4 +55,14 @@ export default {
   delete: function (store) {
     db.collection(store).delete();
   },
+  generateId: function (id) {
+    //DIV
+    let masterId = id.slice(0, 3);
+    //3
+    let increment = Number(id.slice(3)) + 1 + "";
+    let length = "0000".slice(increment.length);
+
+    //DIV0001
+    return masterId + length + increment;
+  },
 };

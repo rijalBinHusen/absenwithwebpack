@@ -10,11 +10,12 @@
           'w3-bar-item',
           'w3-button',
           'w3-hover-light-grey',
-          'w3-padding',
+          'w3-padding w3-large',
           currentNav == nav.component ? 'w3-white' : 'w3-teal',
         ]"
       >
         {{ nav.title }}
+        <font-awesome-icon :icon="nav.icon" />
       </button>
     </span>
   </div>
