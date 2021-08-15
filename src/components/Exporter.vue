@@ -42,7 +42,6 @@ export default {
         this.status = this.$store.getters["ExIm/statusExport"];
         //cek apakah progres suda selessai atau tidak
         this.checkDataCollect();
-        console.log("Mulai lagi")
       }
     },
     //periksa apakah collect data sudah selelsai

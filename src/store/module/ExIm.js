@@ -5,7 +5,7 @@ const ExIm = {
     exportData: [],
     importData: [],
     checkImportData: "",
-    exportDataCollect: false,
+    exportDataCollect: {},
     statusExport: false,
   },
   mutations: {
@@ -46,7 +46,8 @@ const ExIm = {
     },
     //collect data from indexeddb to export
     async exportDataCollect(state) {
-      state.statusExport = false;
+      // state.statusExport = false;
+      state.exportDataCollect.status = false;
       let impor = mydb.getData({ store: "import" });
       let expor = mydb.getData({ store: "export" });
       let divisi = mydb.getData({ store: "divisi" });
@@ -55,9 +56,10 @@ const ExIm = {
           import: val[0],
           export: val[1],
           divisi: val[2],
+          status: true,
         })
       );
-      state.statusExport = true;
+      // state.statusExport = true;
     },
     //destroy all data after collect
     destroyDataCollect(state) {
@@ -107,7 +109,7 @@ const ExIm = {
       return state.checkImportData;
     },
     statusExport(state) {
-      return state.statusExport;
+      return state.exportDataCollect.status;
     },
     //all data collect
     exportDataCollect(state) {
