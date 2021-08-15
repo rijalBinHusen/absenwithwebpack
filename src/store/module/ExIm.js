@@ -33,7 +33,7 @@ const ExIm = {
         ? (toImport = val)
         : (toImport = { time: new Date(), status: val });
       //if the last record is not same e,g true vs false
-      if (state.importData[0].status !== val.status) {
+      if (state.importData[0].status !== toImport.status) {
         state.importData.unshift(toImport);
         mydb.append("import", toImport);
       }
