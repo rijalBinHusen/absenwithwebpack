@@ -20,7 +20,7 @@ const Divisi = {
     },
   },
   actions: {
-    tambah({ commit }, val) {
+    tambah({ dispatch, commit }, val) {
       mydb
         .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
         .then((res) => {
@@ -28,6 +28,7 @@ const Divisi = {
             ? commit("tambah", { id: mydb.generateId(res[0].id), name: val })
             : commit("tambah", { id: "DIV0001", name: val });
         });
+      dispatch("ExIm/importAppend", false, { root: true });
     },
     update({ commit }, val) {
       mydb.update("divisi", { id: val.id }, { name: val.name });

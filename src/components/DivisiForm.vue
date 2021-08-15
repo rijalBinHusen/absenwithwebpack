@@ -24,19 +24,26 @@ export default {
   name: "DivisiForm",
   data: function () {
     return {
+      //check mode is edit or add
       divisi: this.$store.getters["Divisi/edit"][0]
-        ? this.$store.getters["Divisi/edit"][0].name
-        : "",
+        ? //if mode is edit
+          this.$store.getters["Divisi/edit"][0].name
+        : //if mode is add
+          "",
     };
   },
   methods: {
     send() {
+      //check what mode, update or add
       this.$store.getters["Divisi/edit"][0]
-        ? this.$store.dispatch("Divisi/update", {
+        ? //if mode is update
+          this.$store.dispatch("Divisi/update", {
             name: this.divisi,
             id: this.$store.getters["Divisi/edit"][0].id,
           })
-        : this.$store.dispatch("Divisi/tambah", this.divisi);
+        : //if mode is add
+          this.$store.dispatch("Divisi/tambah", this.divisi);
+      //close the modal
       this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
     },
   },
