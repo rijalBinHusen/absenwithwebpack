@@ -4,21 +4,23 @@ const ExIm = {
   state: {
     exportData: [],
     importData: [],
-    checkImportData: "",
     exportDataCollect: {},
-    statusExport: false,
   },
   mutations: {
     //to add time epported data
-    exportAppend(state) {
-      state.exportData.unshift({ time: new Date() });
-      state.importData.unshift({ time: true });
-      mydb.append("export", { time: new Date() });
+    exportAppend(state, val) {
+      //var to append
+      let toExport = "";
+      typeof val == "object"
+        ? (toExport = val)
+        : (toExport = { time: new Date() });
+      state.exportData.unshift(toExport);
+      mydb.append("export", toExport);
     },
     //to grab all dsata time exported from indexxeddb
     exportData(state) {
       mydb
-        .getData({ store: "export", orderBy: "time", desc: true, limit: 10 })
+        .getData({ store: "export", orderBy: "time", desc: true })
         .then((val) => {
           state.exportData = val;
         });
@@ -26,9 +28,12 @@ const ExIm = {
     //to add record to importeddata
     importAppend(state, val) {
       //value to import
-      let toImport = { time: new Date(), status: val };
+      let toImport = "";
+      typeof val == "object"
+        ? (toImport = val)
+        : (toImport = { time: new Date(), status: val });
       //if the last record is not same e,g true vs false
-      if (state.importData[0].mode !== val) {
+      if (state.importData[0].status !== val.status) {
         state.importData.unshift(toImport);
         mydb.append("import", toImport);
       }
@@ -36,21 +41,30 @@ const ExIm = {
     //grab all data time import from indexeddb
     importData(state) {
       mydb
-        .getData({ store: "import", orderBy: "time", desc: true, limit: 10 })
+        .getData({ store: "import", orderBy: "time", desc: true })
         .then((val) => {
-          state.importData = val;
+          val.length > 0
+            ? (state.importData = val)
+            : (state.importData = [{ time: "", status: true }]);
         });
-    },
-    checkImportData(state, val) {
-      state.checkImportData = val;
     },
     //collect data from indexeddb to export
     async exportDataCollect(state) {
       // state.statusExport = false;
       state.exportDataCollect.status = false;
-      let impor = mydb.getData({ store: "import" });
-      let expor = mydb.getData({ store: "export" });
       let divisi = mydb.getData({ store: "divisi" });
+      let impor = mydb.getData({
+        store: "import",
+        orderBy: "time",
+        desc: true,
+        limit: 10,
+      });
+      let expor = mydb.getData({
+        store: "export",
+        orderBy: "time",
+        desc: true,
+        limit: 10,
+      });
       state.exportDataCollect = await Promise.all([impor, expor, divisi]).then(
         (val) => ({
           import: val[0],
@@ -65,29 +79,29 @@ const ExIm = {
     destroyDataCollect(state) {
       state.exportDataCollect = "";
     },
+    empty(state) {
+      state.exportData = [];
+      state.importData = [{ time: "", status: true }];
+    },
   },
   actions: {
-    //to add time when data exported
-    exportAppend({ commit, dispatch }) {
-      commit("exportAppend");
-      //cal import append
-      dispatch("importAppend", true);
-    },
-    //to take data from indexeddb all time exported data
-    exportData({ commit }) {
+    getAllData({ commit, dispatch }) {
+      //get all divisi record from indexeddb
+      dispatch("Divisi/divisi", null, { root: true });
+      //get all import record from indexeddb
+      commit("importData");
+      //get all export record from indexeddb
       commit("exportData");
     },
-    //to take data from indexeddb all time imported data
-    importData({ commit }) {
-      commit("importData");
+    //to add time when data exported
+    exportAppend({ commit, dispatch }, val) {
+      //cal import append
+      dispatch("importAppend", true);
+      commit("exportAppend", val);
     },
     //add data to import data
     importAppend({ commit }, val) {
       commit("importAppend", val);
-    },
-    //to check data that will import
-    checkImportData({ commit }, val) {
-      commit("checkImportData", val);
     },
     //trigger to collect all data from indexeddb
     exportDataCollect({ commit }) {
@@ -97,17 +111,39 @@ const ExIm = {
     destroyDataCollect({ commit }) {
       commit("destroyDataCollect");
     },
+    //destroy all data in indexeddb
+    emptyAll({ dispatch, commit }) {
+      dispatch("Divisi/empty", {}, { root: true });
+      mydb.emptyStore("import");
+      mydb.emptyStore("export");
+      commit("empty");
+    },
+    //import data from importer to indexeddb
+    importerData({ dispatch, commit }, val) {
+      // mydb.deleteDb();
+      Object.keys(val).map((keys) => {
+        if (keys !== "status") {
+          val[keys].map((valImport) => {
+            mydb.append(keys, valImport);
+            keys == "divisi"
+              ? dispatch("Divisi/tambah", valImport, { root: true })
+              : commit(keys + "Append", valImport);
+          });
+        }
+        dispatch("importAppend", "imported");
+      });
+    },
   },
   getters: {
     exportData(state) {
       return state.exportData;
     },
     importData(state) {
-      return state.importData[0];
+      return state.importData.length > 0
+        ? state.importData
+        : [{ time: "", status: true }];
     },
-    checkImportData(state) {
-      return state.checkImportData;
-    },
+    //is data collect finished
     statusExport(state) {
       return state.exportDataCollect.status;
     },

@@ -18,26 +18,39 @@ const Divisi = {
     divisi(state, val) {
       state.divisi = val;
     },
+    empty(state) {
+      state.divisi = [];
+    },
   },
   actions: {
     tambah({ dispatch, commit }, val) {
-      mydb
-        .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
-        .then((res) => {
-          res[0]
-            ? commit("tambah", { id: mydb.generateId(res[0].id), name: val })
-            : commit("tambah", { id: "DIV0001", name: val });
-        });
+      typeof val == "object"
+        ? commit("tambah", val)
+        : mydb
+            .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
+            .then((res) => {
+              res[0]
+                ? commit("tambah", {
+                    id: mydb.generateId(res[0].id),
+                    name: val,
+                  })
+                : commit("tambah", { id: "DIV0001", name: val });
+            });
       dispatch("ExIm/importAppend", false, { root: true });
     },
-    update({ commit }, val) {
+    update({ commit, dispatch }, val) {
       mydb.update("divisi", { id: val.id }, { name: val.name });
+      dispatch("ExIm/importAppend", false, { root: true });
       commit("update", val);
     },
     divisi({ commit }) {
-      mydb.getData({ store: "divisi" }).then((res) => {
+      mydb.getData({ store: "divisi", orderBy: "id" }).then((res) => {
         commit("divisi", res);
       });
+    },
+    empty({ commit }) {
+      mydb.emptyStore("divisi");
+      commit("empty");
     },
   },
   getters: {

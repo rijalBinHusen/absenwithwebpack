@@ -52,8 +52,14 @@ export default {
   findData: function (store, keyword) {
     return db.collection(store).doc(keyword).get();
   },
-  delete: function (store) {
+  deleteCollection: function (store) {
     db.collection(store).delete();
+  },
+  deleteDb: function () {
+    db.delete();
+  },
+  emptyStore: function (store) {
+    db.collection(store).set([]);
   },
   generateId: function (id) {
     //DIV

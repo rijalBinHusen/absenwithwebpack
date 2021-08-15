@@ -26,9 +26,8 @@ export default {
     },
   },
   created() {
-    this.$store.dispatch("Divisi/divisi");
-    this.$store.dispatch("ExIm/exportData");
-    this.$store.dispatch("ExIm/importData");
+    //get all data from indexeddb
+    this.$store.dispatch("ExIm/getAllData");
   },
 };
 </script>

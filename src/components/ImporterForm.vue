@@ -1,31 +1,42 @@
 <template>
   <div>
-    <div
-      class="w3-xlarge"
-      v-for="store in Object.keys(checkImportData)"
-      :key="store"
-    >
-      <span>
-        <input type="checkbox" @change="show[store] = !show[store]" />
-        {{ store }}
-      </span>
-      <div :key="value.id" v-for="value in checkImportData[store]">
-        <span class="w3-small" v-if="show[store]">
-          <input type="checkbox" checked /> {{ value.name }}
-        </span>
-      </div>
-    </div>
+    <p class="w3-xlarge">Import Data</p>
+    <input
+      class="w3-hide"
+      @change.prevent="impor($event)"
+      type="file"
+      accept=".js"
+      ref="importerField"
+    /><br />
+    <font-awesome-icon
+      @click="importerField"
+      style="font-size: 80px; cursor: pointer"
+      icon="cloud-upload-alt"
+    />
   </div>
 </template>
 
 <script>
 export default {
   name: "ImporterForm",
-  data() {
-    return {
-      show: {},
-      checkImportData: this.$store.getters["ExIm/checkImportData"],
-    };
+  methods: {
+    importerField() {
+      this.$refs.importerField.click();
+    },
+    impor(ev) {
+      // console.log(ev);
+      const reader = new FileReader();
+
+      //when reading is completed load
+      reader.onload = (event) => this.send(JSON.parse(event.target.result));
+
+      reader.readAsText(ev.target.files[0]);
+    },
+    send(val) {
+      //send data to vuex
+      this.$store.dispatch("ExIm/importerData", val);
+      // console.log(val);
+    },
   },
 };
 </script>

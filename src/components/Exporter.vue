@@ -10,7 +10,7 @@
     <p class="w3-xlarge">Exported :</p>
     <ul class="">
       <li :key="expor.time" v-for="expor in exportData">
-        {{ expor.time }}
+        {{ new Date(expor.time) }}
       </li>
     </ul>
   </div>
