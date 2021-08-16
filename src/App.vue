@@ -11,6 +11,7 @@ import Modal from "./components/Modal.vue";
 import Exporter from "./components/Exporter.vue";
 import Importer from "./components/Importer.vue";
 import Bagian from "./components/Bagian.vue";
+import Level from "./components/Level.vue";
 
 export default {
   name: "App",
@@ -21,6 +22,7 @@ export default {
     Exporter,
     Importer,
     Bagian,
+    Level,
   },
   computed: {
     currentNav() {

@@ -27,6 +27,8 @@ import DivisiForm from "./DivisiForm.vue";
 import ImporterForm from "./ImporterForm.vue";
 import LoaderForm from "./Loader.vue";
 import BagianForm from "./BagianForm.vue";
+import LevelForm from "./LevelForm.vue";
+
 export default {
   name: "Modal",
   methods: {
@@ -47,6 +49,7 @@ export default {
     ImporterForm,
     LoaderForm,
     BagianForm,
+    LevelForm,
   },
 };
 </script>
