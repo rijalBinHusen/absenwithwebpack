@@ -85,9 +85,7 @@ const ExIm = {
     },
   },
   actions: {
-    getAllData({ commit, dispatch }) {
-      //get all divisi record from indexeddb
-      dispatch("Divisi/divisi", null, { root: true });
+    getAllData({ commit }) {
       //get all import record from indexeddb
       commit("importData");
       //get all export record from indexeddb
@@ -120,17 +118,24 @@ const ExIm = {
     },
     //import data from importer to indexeddb
     importerData({ dispatch, commit }, val) {
-      // mydb.deleteDb();
-      Object.keys(val).map((keys) => {
-        if (keys !== "status") {
-          val[keys].map((valImport) => {
-            mydb.append(keys, valImport);
-            keys !== "import" && keys !== "export"
-              ? dispatch("Divisi/tambah", valImport, { root: true })
-              : commit(keys + "Append", valImport);
-          });
-        }
+      // /make import progress is promise
+      let importProgress = new Promise((resolve) => {
+        Object.keys(val).map((keys, index) => {
+          if (keys !== "status") {
+            val[keys].map((valImport) => {
+              if (keys !== "import" && keys !== "export") {
+                dispatch("Divisi/tambah", valImport, { root: true });
+              } else {
+                commit(keys + "Append", valImport);
+              }
+            });
+          }
+          if (index + 1 == Object.keys(val).length) resolve();
+        });
+      });
+      importProgress.then(() => {
         dispatch("importAppend", "imported");
+        dispatch("Modal/loading", "close", { root: true });
       });
     },
   },

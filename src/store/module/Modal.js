@@ -11,10 +11,17 @@ const Modal = {
       state.mode = param.mode;
       state.id = param.id;
     },
+    loading(state, status) {
+      state.mode = "loading";
+      status == "open" ? (state.status = true) : (state.status = false);
+    },
   },
   actions: {
     modalChange({ commit }, param) {
       commit("modalChange", param);
+    },
+    loading({ commit }, status) {
+      commit("loading", status);
     },
   },
   getters: {
@@ -24,9 +31,6 @@ const Modal = {
         id: state.id,
         mode: state.mode,
       };
-    },
-    other(state) {
-      return state.status;
     },
   },
 };

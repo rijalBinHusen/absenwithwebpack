@@ -14,7 +14,9 @@
         class="w3-container w3-padding w3-center margin-top"
         style="min-height: 300px"
       >
-        <component :is="currentNav + 'Form'"></component>
+        <component
+          :is="modal.mode == 'loading' ? 'loaderForm' : currentNav + 'Form'"
+        ></component>
       </div>
     </div>
   </div>

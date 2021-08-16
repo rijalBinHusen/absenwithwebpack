@@ -25,10 +25,6 @@ export default {
       return this.$store.getters["Navbar/currentNav"];
     },
   },
-  created() {
-    //get all data from indexeddb
-    this.$store.dispatch("ExIm/getAllData");
-  },
 };
 </script>
 

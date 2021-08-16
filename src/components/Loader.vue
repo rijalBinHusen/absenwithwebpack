@@ -1,4 +1,5 @@
 <template>
+  <br /><br /><br />
   <div class="lds-hourglass w3-margin-top"></div>
   <p class="w3-large">Mohon tunggu...</p>
 </template>

@@ -1,7 +1,7 @@
 <template>
   <div class="w3-center">
     <span class="w3-xlarge">
-      <p>Data akan dihapus sebelum import</p>
+      <p>Hapus data sebelum import</p>
       <span
         :class="[
           'w3-jumbo w3-button w3-white w3-hover-white',
@@ -44,11 +44,6 @@
 <script>
 export default {
   name: "Importer",
-  data() {
-    return {
-      importData: this.$store.getters["ExIm/importData"],
-    };
-  },
   methods: {
     destroy() {
       // delete all data indexeddb
@@ -60,6 +55,10 @@ export default {
       });
     },
   },
-  computed: {},
+  computed: {
+    importData() {
+      return this.$store.getters["ExIm/importData"];
+    },
+  },
 };
 </script>

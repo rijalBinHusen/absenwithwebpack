@@ -21,9 +21,6 @@ export default {
   name: "Exporter",
   data() {
     return {
-      exportData: this.$store.getters["ExIm/exportData"].sort(
-        (a, b) => b.time - a.time
-      ),
       status: true,
     };
   },
@@ -31,7 +28,9 @@ export default {
     //trigeer methods untuk collect data
     exportDataCollect(cond) {
       if (cond == "start") {
-        //jadikan status menjadi fallse agar dick lagi
+        //buka loader
+        this.$store.dispatch("Modal/loading", "open");
+        //jadikan status menjadi fallse agar dichek lagi
         this.status = false;
         //trigger methods divuex untuk collect data
         this.$store.dispatch("ExIm/exportDataCollect");
@@ -56,6 +55,8 @@ export default {
           }, 3000);
     },
     download(fileName, contentType) {
+      // tutup Loader
+      this.$store.dispatch("Modal/loading", "close");
       //append time to export record
       this.$store.dispatch("ExIm/exportAppend");
       var a = document.createElement("a");
@@ -72,6 +73,14 @@ export default {
       this.$store.dispatch("ExIm/destroyDataCollect");
     },
     // download(jsonData, 'json.txt', 'text/plain');
+  },
+  computed: {
+    exportData() {
+      return this.$store.getters["ExIm/exportData"];
+    },
+  },
+  beforeCreate() {
+    this.$store.dispatch("ExIm/getAllData");
   },
 };
 </script>

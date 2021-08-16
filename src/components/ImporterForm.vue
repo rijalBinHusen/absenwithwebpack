@@ -24,6 +24,8 @@ export default {
       this.$refs.importerField.click();
     },
     impor(ev) {
+      //buka loader
+      this.$store.dispatch("Modal/loading", "open");
       // console.log(ev);
       const reader = new FileReader();
 

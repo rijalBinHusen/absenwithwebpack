@@ -32,11 +32,14 @@ export default {
       this.$store.dispatch("Modal/modalChange", { mode: "Update", id: id });
     },
   },
-  data() {
-    return {
-      divisi: this.$store.getters["Divisi/divisi"],
-    };
+  computed: {
+    divisi() {
+      return this.$store.getters["Divisi/divisi"];
+    },
   },
-  computed: {},
+  beforeCreate() {
+    //ambil datanya
+    this.$store.dispatch("Divisi/divisi");
+  },
 };
 </script>
