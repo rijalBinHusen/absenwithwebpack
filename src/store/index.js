@@ -5,6 +5,7 @@ import Modal from "./module/Modal.js";
 import ExIm from "./module/ExIm.js";
 import Bagian from "./module/Bagian.js";
 import Level from "./module/Level.js";
+import Karyawan from "./module/Karyawan.js";
 
 export default createStore({
   state: {},
@@ -17,5 +18,6 @@ export default createStore({
     ExIm,
     Bagian,
     Level,
+    Karyawan,
   },
 });

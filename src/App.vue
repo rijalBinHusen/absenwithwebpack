@@ -12,6 +12,7 @@ import Exporter from "./components/Exporter.vue";
 import Importer from "./components/Importer.vue";
 import Bagian from "./components/Bagian.vue";
 import Level from "./components/Level.vue";
+import Karyawan from "./components/Karyawan.vue";
 
 export default {
   name: "App",
@@ -23,6 +24,7 @@ export default {
     Importer,
     Bagian,
     Level,
+    Karyawan,
   },
   computed: {
     currentNav() {

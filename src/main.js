@@ -16,6 +16,7 @@ import {
   faCloudDownloadAlt,
   faCloudUploadAlt,
   faTrashAlt,
+  faFingerprint,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/vue-fontawesome";
 
@@ -31,7 +32,8 @@ library.add(
   faFileDownload,
   faCloudDownloadAlt,
   faCloudUploadAlt,
-  faTrashAlt
+  faTrashAlt,
+  faFingerprint
 );
 
 createApp(App)

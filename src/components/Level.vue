@@ -1,6 +1,6 @@
 <template>
   <div class="w3-center">
-    <ul class="w3-ul">
+    <ul class="w3-ul w3-margin-bottom">
       <li class="w3-xlarge">
         Daftar level karyawan
         <button
@@ -10,14 +10,31 @@
           <font-awesome-icon icon="plus" />
         </button>
       </li>
-
-      <li v-for="lev in level" :key="lev.id" class="w3-hover-light-gray">
-        {{ lev.name }}
-        <a @click="edit(bag.id)" class="w3-right w3-tag w3-teal w3-round">
-          Edit <font-awesome-icon icon="pencil-alt" />
-        </a>
-      </li>
     </ul>
+    <table class="w3-table w3-margin-top">
+      <thead>
+        <tr class="w3-teal">
+          <th>Nama level</th>
+          <th>Jam kerja</th>
+          <th>Opsi</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr
+          v-for="lev in level"
+          :key="lev.id"
+          class="w3-hover-light-gray w3-border"
+        >
+          <td>{{ lev.name }}</td>
+          <td>{{ lev.jamKerja }}</td>
+          <td class="w3-left">
+            <a @click="edit(lev.id)" class="w3-right w3-tag w3-teal w3-round">
+              Edit <font-awesome-icon icon="pencil-alt" />
+            </a>
+          </td>
+        </tr>
+      </tbody>
+    </table>
   </div>
 </template>
 

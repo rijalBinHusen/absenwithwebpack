@@ -8,11 +8,11 @@ const Level = {
   mutations: {
     tambah(state, val) {
       mydb.append("level", val);
-      state.level.push(val);
+      state.level.unshift(val);
     },
     update(state, val) {
       state.level.map((obj, index) => {
-        obj.id == val.id ? (state.level[index].name = val.name) : false;
+        obj.id == val.id ? (state.level[index] = val) : false;
       });
     },
     level(state, val) {
@@ -24,7 +24,7 @@ const Level = {
   },
   actions: {
     tambah({ dispatch, commit }, val) {
-      typeof val == "object"
+      val.id
         ? commit("tambah", val)
         : mydb
             .getData({ store: "level", orderBy: "id", desc: true, limit: 1 })
@@ -32,14 +32,19 @@ const Level = {
               res[0]
                 ? commit("tambah", {
                     id: mydb.generateId(res[0].id),
-                    name: val,
+                    name: val.name,
+                    jamKerja: val.jamKerja,
                   })
-                : commit("tambah", { id: "BAG0001", name: val });
+                : commit("tambah", {
+                    id: "LEV0001",
+                    name: val.name,
+                    jamKerja: val.jamKerja,
+                  });
             });
       dispatch("ExIm/importAppend", false, { root: true });
     },
     update({ commit, dispatch }, val) {
-      mydb.update("level", { id: val.id }, { name: val.name });
+      mydb.update("level", { id: val.id }, val);
       dispatch("ExIm/importAppend", false, { root: true });
       commit("update", val);
     },
@@ -59,7 +64,7 @@ const Level = {
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.level.filter((val) => {
+        ? state.level.find((val) => {
             return val.id === rootGetters["Modal"].id;
           })
         : false;

@@ -55,6 +55,7 @@ const ExIm = {
       let divisi = mydb.getData({ store: "divisi" });
       let bagian = mydb.getData({ store: "bagian" });
       let level = mydb.getData({ store: "level" });
+      let karyawan = mydb.getData({ store: "karyawan" });
       let impor = mydb.getData({
         store: "import",
         orderBy: "time",
@@ -73,12 +74,14 @@ const ExIm = {
         divisi,
         bagian,
         level,
+        karyawan,
       ]).then((val) => ({
         import: val[0],
         export: val[1],
         divisi: val[2],
         bagian: val[3],
         level: val[4],
+        karyawan: val[5],
         status: true,
       }));
       // state.statusExport = true;
@@ -98,6 +101,7 @@ const ExIm = {
       dispatch("Divisi/divisi", "", { root: true });
       dispatch("Bagian/bagian", "", { root: true });
       dispatch("Level/level", "", { root: true });
+      dispatch("Karyawan/karyawan", "", { root: true });
       //get all import record from indexeddb
       commit("importData");
       //get all export record from indexeddb
@@ -126,6 +130,7 @@ const ExIm = {
       dispatch("Divisi/empty", {}, { root: true });
       dispatch("Bagian/empty", {}, { root: true });
       dispatch("Level/empty", {}, { root: true });
+      dispatch("Karyawan/empty", {}, { root: true });
       mydb.emptyStore("import");
       mydb.emptyStore("export");
       commit("empty");
