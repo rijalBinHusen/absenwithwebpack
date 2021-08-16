@@ -7,8 +7,10 @@ const Divisi = {
   },
   mutations: {
     tambah(state, val) {
-      mydb.append("divisi", val);
-      state.divisi.push(val);
+      let toAppend = "";
+      val.obj ? (toAppend = Object.assign(val.id, val.obj)) : (toAppend = val);
+      mydb.append("divisi", toAppend);
+      state.divisi.push(toAppend);
     },
     update(state, val) {
       state.divisi.map((obj, index) => {
@@ -24,17 +26,19 @@ const Divisi = {
   },
   actions: {
     tambah({ dispatch, commit }, val) {
-      typeof val == "object"
+      val.id
         ? commit("tambah", val)
         : mydb
             .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {
               res[0]
                 ? commit("tambah", {
-                    id: mydb.generateId(res[0].id),
-                    name: val,
+                    id: {
+                      id: mydb.generateId(res[0].id),
+                    },
+                    obj: val,
                   })
-                : commit("tambah", { id: "DIV0001", name: val });
+                : commit("tambah", { id: { id: "DIV0001" }, obj: val });
             });
       dispatch("ExIm/importAppend", false, { root: true });
     },
@@ -59,7 +63,7 @@ const Divisi = {
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.divisi.filter((val) => {
+        ? state.divisi.find((val) => {
             return val.id === rootGetters["Modal"].id;
           })
         : false;

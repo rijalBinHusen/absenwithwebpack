@@ -7,12 +7,15 @@ const Bagian = {
   },
   mutations: {
     tambah(state, val) {
-      mydb.append("bagian", val);
-      state.bagian.push(val);
+      let toAppend = "";
+      val.obj ? (toAppend = Object.assign(val.id, val.obj)) : (toAppend = val);
+      mydb.append("bagian", toAppend);
+      // console.log(val)
+      state.bagian.push(toAppend);
     },
     update(state, val) {
       state.bagian.map((obj, index) => {
-        obj.id == val.id ? (state.bagian[index].name = val.name) : false;
+        obj.id == val.id ? (state.bagian[index] = val) : false;
       });
     },
     bagian(state, val) {
@@ -24,22 +27,25 @@ const Bagian = {
   },
   actions: {
     tambah({ dispatch, commit }, val) {
-      typeof val == "object"
+      val.id
         ? commit("tambah", val)
         : mydb
             .getData({ store: "bagian", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {
               res[0]
                 ? commit("tambah", {
-                    id: mydb.generateId(res[0].id),
-                    name: val,
+                    id: { id: mydb.generateId(res[0].id) },
+                    obj: val,
                   })
-                : commit("tambah", { id: "BAG0001", name: val });
+                : commit("tambah", {
+                    id: { id: "BAG0001" },
+                    obj: val,
+                  });
             });
       dispatch("ExIm/importAppend", false, { root: true });
     },
     update({ commit, dispatch }, val) {
-      mydb.update("bagian", { id: val.id }, { name: val.name });
+      mydb.update("bagian", { id: val.id }, val);
       dispatch("ExIm/importAppend", false, { root: true });
       commit("update", val);
     },
@@ -59,7 +65,7 @@ const Bagian = {
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.bagian.filter((val) => {
+        ? state.bagian.find((val) => {
             return val.id === rootGetters["Modal"].id;
           })
         : false;

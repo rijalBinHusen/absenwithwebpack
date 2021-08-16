@@ -21,7 +21,10 @@
 
       <input
         type="submit"
-        class="w3-button w3-left w3-margin-top w3-teal w3-round-large"
+        :class="[
+          'w3-button w3-left w3-margin-top w3-round',
+          Object.values(level).includes('') ? 'w3-disabled w3-red' : 'w3-teal ',
+        ]"
         :value="level.id ? 'Update' : 'Tambah'"
       />
     </form>
