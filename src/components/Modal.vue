@@ -22,7 +22,8 @@
 
 <script>
 import DivisiForm from "./DivisiForm.vue";
-import ImporterForm from "./ImporterForm.vue"
+import ImporterForm from "./ImporterForm.vue";
+import LoaderForm from "./Loader.vue";
 export default {
   name: "Modal",
   methods: {
@@ -41,6 +42,7 @@ export default {
   components: {
     DivisiForm,
     ImporterForm,
+    LoaderForm,
   },
 };
 </script>

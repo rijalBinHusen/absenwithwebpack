@@ -3,7 +3,6 @@
     <span class="w3-xlarge">
       <p>Data akan dihapus sebelum import</p>
       <span
-        @click="destroy"
         :class="[
           'w3-jumbo w3-button w3-white w3-hover-white',
           !importData[0].status || importData[0].status == 'imported'
@@ -12,6 +11,7 @@
         ]"
       >
         <font-awesome-icon
+          @click="destroy($event.target)"
           :style="[
             !importData[0].status || importData[0].status == 'imported'
               ? 'color:red'
@@ -35,7 +35,7 @@
         v-for="impor in importData"
         :key="impor.status"
       >
-        {{ impor.time }}
+        {{ new Date(impor.time) }}
       </li>
     </ul>
   </div>
@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     destroy() {
-      //delete all data indexeddb
+      // delete all data indexeddb
       this.$store.dispatch("ExIm/emptyAll");
       //open modal
       this.$store.dispatch("Modal/modalChange", {

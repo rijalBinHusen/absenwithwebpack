@@ -31,7 +31,7 @@ library.add(
   faFileDownload,
   faCloudDownloadAlt,
   faCloudUploadAlt,
-  faTrashAlt,
+  faTrashAlt
 );
 
 createApp(App)

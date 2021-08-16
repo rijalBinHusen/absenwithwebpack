@@ -125,7 +125,7 @@ const ExIm = {
         if (keys !== "status") {
           val[keys].map((valImport) => {
             mydb.append(keys, valImport);
-            keys == "divisi"
+            keys !== "import" && keys !== "export"
               ? dispatch("Divisi/tambah", valImport, { root: true })
               : commit(keys + "Append", valImport);
           });
