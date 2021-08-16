@@ -18,29 +18,36 @@
       </li>
     </ul>
 
-    <ul class="w3-ul">
+    <!-- <ul class="w3-ul">
       <li v-for="kar in karyawan" :key="kar.id">
-        {{ kar.nama }}
+        {{
+          kar.nama +
+          " - " +
+          kar.divisi +
+          " - " +
+          kar.bagian +
+          " - " +
+          kar.level +
+          " - "
+        }}
       </li>
-    </ul>
-    <!-- <datatable
+    </ul> -->
+    <datatable
       :heads="['idKaryawan', 'nama', 'bagian', 'level']"
-      :datanya="dataKaryawanLengkap"
+      :datanya="karyawan"
       :option="['edit']"
-      :keydata="'id_karyawan'"
-      :icon="icon"
-      :id="'table1'"
-      @edit="
-        deData = cariVal(datanya, { equalTo: ['id_karyawan', $event] });
-        deData.mode = 'edit';
-        $emit('modal', deData);
-      "
-    > -->
-    <!-- </datatable> -->
+      :keydata="'id'"
+      :icon="'pencil-alt'"
+      :id="'table_karyawan'"
+      @edit="edit($event)"
+    >
+    </datatable>
   </div>
 </template>
 
 <script>
+import Datatable from "./Datatable.vue";
+
 export default {
   name: "Karyawan",
   methods: {
@@ -53,6 +60,9 @@ export default {
     karyawan() {
       return this.$store.getters["Karyawan/karyawan"];
     },
+  },
+  components: {
+    Datatable,
   },
 };
 </script>

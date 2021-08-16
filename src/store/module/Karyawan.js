@@ -7,19 +7,11 @@ const Karyawan = {
   },
   mutations: {
     tambah(state, val) {
-      let toAppend = val;
-      if (Object.keys(val).length == 2) {
-        toAppend = {
-          id: val.id,
-          idKaryawan: val.obj.idKaryawan,
-          nama: val.obj.nama,
-          divisi: val.obj.divisi,
-          bagian: val.obj.bagian,
-          level: val.obj.level,
-        };
-      }
-      mydb.append("karyawan", val.obj);
-      state.karyawan.push(toAppend);
+      let toAppend = "";
+      val.obj ? (toAppend = Object.assign(val.id, val.obj)) : (toAppend = val);
+      mydb.append("karyawan", toAppend);
+      state.karyawan.unshift(toAppend);
+      console.log(toAppend);
     },
     update(state, val) {
       state.karyawan.map((obj, index) => {
@@ -47,10 +39,10 @@ const Karyawan = {
             .then((res) => {
               res[0]
                 ? commit("tambah", {
-                    id: mydb.generateId(res[0].id),
+                    id: { id: mydb.generateId(res[0].id) },
                     obj: val,
                   })
-                : commit("tambah", { id: "KAR0001", obj: val });
+                : commit("tambah", { id: { id: "KAR0001" }, obj: val });
             });
       dispatch("ExIm/importAppend", false, { root: true });
     },
