@@ -79,8 +79,5 @@ export default {
       return this.$store.getters["ExIm/exportData"];
     },
   },
-  beforeCreate() {
-    this.$store.dispatch("ExIm/getAllData");
-  },
 };
 </script>

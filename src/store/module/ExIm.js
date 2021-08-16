@@ -53,6 +53,7 @@ const ExIm = {
       // state.statusExport = false;
       state.exportDataCollect.status = false;
       let divisi = mydb.getData({ store: "divisi" });
+      let bagian = mydb.getData({ store: "bagian" });
       let impor = mydb.getData({
         store: "import",
         orderBy: "time",
@@ -65,14 +66,18 @@ const ExIm = {
         desc: true,
         limit: 10,
       });
-      state.exportDataCollect = await Promise.all([impor, expor, divisi]).then(
-        (val) => ({
-          import: val[0],
-          export: val[1],
-          divisi: val[2],
-          status: true,
-        })
-      );
+      state.exportDataCollect = await Promise.all([
+        impor,
+        expor,
+        divisi,
+        bagian,
+      ]).then((val) => ({
+        import: val[0],
+        export: val[1],
+        divisi: val[2],
+        bagian: val[3],
+        status: true,
+      }));
       // state.statusExport = true;
     },
     //destroy all data after collect
@@ -85,7 +90,10 @@ const ExIm = {
     },
   },
   actions: {
-    getAllData({ commit }) {
+    getAllData({ commit, dispatch }) {
+      //get data divisi
+      dispatch("Divisi/divisi", "", { root: true });
+      dispatch("Bagian/bagian", "", { root: true });
       //get all import record from indexeddb
       commit("importData");
       //get all export record from indexeddb
@@ -112,6 +120,7 @@ const ExIm = {
     //destroy all data in indexeddb
     emptyAll({ dispatch, commit }) {
       dispatch("Divisi/empty", {}, { root: true });
+      dispatch("Bagian/empty", {}, { root: true });
       mydb.emptyStore("import");
       mydb.emptyStore("export");
       commit("empty");
@@ -123,10 +132,15 @@ const ExIm = {
         Object.keys(val).map((keys, index) => {
           if (keys !== "status") {
             val[keys].map((valImport) => {
-              if (keys !== "import" && keys !== "export") {
-                dispatch("Divisi/tambah", valImport, { root: true });
-              } else {
+              if (keys == "import" || keys == "export") {
                 commit(keys + "Append", valImport);
+              } else {
+                dispatch(
+                  keys.charAt(0).toUpperCase().concat(keys.slice(1)) +
+                    "/tambah",
+                  valImport,
+                  { root: true }
+                );
               }
             });
           }

@@ -10,6 +10,7 @@ import Divisi from "./components/Divisi.vue";
 import Modal from "./components/Modal.vue";
 import Exporter from "./components/Exporter.vue";
 import Importer from "./components/Importer.vue";
+import Bagian from "./components/Bagian.vue";
 
 export default {
   name: "App",
@@ -19,11 +20,15 @@ export default {
     Modal,
     Exporter,
     Importer,
+    Bagian,
   },
   computed: {
     currentNav() {
       return this.$store.getters["Navbar/currentNav"];
     },
+  },
+  created() {
+    this.$store.dispatch("ExIm/getAllData");
   },
 };
 </script>
