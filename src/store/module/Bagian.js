@@ -68,9 +68,11 @@ const Bagian = {
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.bagian.find((val) => {
-            return val.id === rootGetters["Modal"].id;
-          })
+        ? JSON.stringify(
+            state.bagian.find((val) => {
+              return val.id === rootGetters["Modal"].id;
+            })
+          )
         : false;
     },
   },

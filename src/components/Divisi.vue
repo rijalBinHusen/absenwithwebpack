@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     divisi() {
-      return this.$store.getters["Divisi/divisi"];
+      return JSON.parse(this.$store.getters["Divisi/divisi"]);
     },
   },
 };

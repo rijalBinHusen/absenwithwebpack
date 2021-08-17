@@ -30,7 +30,7 @@ export default {
       //check mode is edit or add
       divisi: this.$store.getters["Divisi/edit"]
         ? //if mode is edit
-          this.$store.getters["Divisi/edit"]
+          JSON.parse(this.$store.getters["Divisi/edit"])
         : //if mode is add
           { name: "" },
     };

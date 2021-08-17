@@ -140,7 +140,7 @@ export default {
     send() {
       !Object.values(this.karyawan).includes("")
         ? this.$store.dispatch("Karyawan/tambah", this.karyawan)
-        : this.$store.dispatch("Karyawan/update", this.karyawan)
+        : this.$store.dispatch("Karyawan/update", this.karyawan);
       //close the modal
       this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
     },

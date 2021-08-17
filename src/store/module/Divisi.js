@@ -59,16 +59,18 @@ const Divisi = {
   },
   getters: {
     divisi(state) {
-      return state.divisi;
+      return JSON.stringify(state.divisi);
     },
     divisiId: (state) => (id) => {
       return JSON.stringify(state.divisi.find((val) => val.id === id));
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.divisi.find((val) => {
-            return val.id === rootGetters["Modal"].id;
-          })
+        ? JSON.stringify(
+            state.divisi.find((val) => {
+              return val.id === rootGetters["Modal"].id;
+            })
+          )
         : false;
     },
   },

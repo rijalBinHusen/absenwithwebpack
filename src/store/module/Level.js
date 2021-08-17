@@ -67,9 +67,11 @@ const Level = {
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
-        ? state.level.find((val) => {
-            return val.id === rootGetters["Modal"].id;
-          })
+        ? JSON.stringify(
+            state.level.find((val) => {
+              return val.id === rootGetters["Modal"].id;
+            })
+          )
         : false;
     },
   },

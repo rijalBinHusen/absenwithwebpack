@@ -39,7 +39,7 @@ export default {
       //check mode is edit or add
       level: this.$store.getters["Level/edit"]
         ? //if mode is edit
-          this.$store.getters["Level/edit"]
+          JSON.parse(this.$store.getters["Level/edit"])
         : //if mode is add
           {
             name: "",

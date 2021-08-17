@@ -30,7 +30,7 @@ export default {
       //check mode is edit or add
       bagian: this.$store.getters["Bagian/edit"]
         ? //if mode is edit
-          this.$store.getters["Bagian/edit"]
+          JSON.parse(this.$store.getters["Bagian/edit"])
         : //if mode is add
           { name: "" },
     };
