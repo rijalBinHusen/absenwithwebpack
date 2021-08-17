@@ -51,7 +51,7 @@
         <td :key="key" v-for="key in heads">
           <input
             type="text"
-            style="max-width: 80px"
+            class="w3-input"
             placeholder="Search"
             :value="[
               deData.searchKey.includes(key)

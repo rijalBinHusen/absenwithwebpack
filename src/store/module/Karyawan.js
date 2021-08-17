@@ -7,11 +7,8 @@ const Karyawan = {
   },
   mutations: {
     tambah(state, val) {
-      let toAppend = "";
-      val.obj ? (toAppend = Object.assign(val.id, val.obj)) : (toAppend = val);
-      mydb.append("karyawan", toAppend);
-      state.karyawan.unshift(toAppend);
-      console.log(toAppend);
+      mydb.append("karyawan", val);
+      state.karyawan.unshift(val);
     },
     update(state, val) {
       state.karyawan.map((obj, index) => {
@@ -38,11 +35,11 @@ const Karyawan = {
             })
             .then((res) => {
               res[0]
-                ? commit("tambah", {
-                    id: { id: mydb.generateId(res[0].id) },
-                    obj: val,
-                  })
-                : commit("tambah", { id: { id: "KAR0001" }, obj: val });
+                ? commit(
+                    "tambah",
+                    Object.assign({ id: mydb.generateId(res[0].id) }, val)
+                  )
+                : commit("tambah", Object.assign({ id: "KAR0001" }, val));
             });
       dispatch("ExIm/importAppend", false, { root: true });
     },
@@ -63,7 +60,7 @@ const Karyawan = {
   },
   getters: {
     karyawan(state) {
-      return state.karyawan;
+      return JSON.stringify(state.karyawan);
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id

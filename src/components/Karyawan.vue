@@ -33,7 +33,7 @@
       </li>
     </ul> -->
     <datatable
-      :heads="['idKaryawan', 'nama', 'bagian', 'level']"
+      :heads="['idKaryawan', 'nama', 'divisi', 'bagian', 'level']"
       :datanya="karyawan"
       :option="['edit']"
       :keydata="'id'"
@@ -58,7 +58,15 @@ export default {
   },
   computed: {
     karyawan() {
-      return this.$store.getters["Karyawan/karyawan"];
+      let result = [];
+      // eslint-disable-next-line no-unused-vars
+      JSON.parse(this.$store.getters["Karyawan/karyawan"]).map((val, index) => {
+        result.push(val);
+        result[index].divisi = JSON.parse(
+          this.$store.getters["Divisi/divisiId"](val.divisi)
+        ).name;
+      });
+      return result;
     },
   },
   components: {
