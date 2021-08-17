@@ -71,6 +71,23 @@ const Karyawan = {
           )
         : false;
     },
+    karyawanId: (state, getters, rootState, rootGetters) => (id) => {
+      let result = {};
+      let target = state.karyawan.find((val) => val.id === id);
+      Object.keys(target).map((key) => {
+        key === "id" || key === "idKaryawan" || key === "nama"
+          ? (result[key] = target[key])
+          : (result[key] = JSON.parse(
+              rootGetters[
+                key.charAt(0).toUpperCase().concat(key.slice(1)) +
+                  "/" +
+                  key +
+                  "Id"
+              ](target[key])
+            ).name);
+      });
+      return JSON.stringify(result);
+    },
   },
 };
 

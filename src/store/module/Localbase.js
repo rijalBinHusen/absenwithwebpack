@@ -61,11 +61,32 @@ export default {
   emptyStore: function (store) {
     db.collection(store).set([]);
   },
-  generateId: function (id) {
+  generateId: function (id, time) {
     //DIV
     let masterId = id.slice(0, 3);
-    //3
+    //0003 as 3 on will be +1
     let increment = Number(id.slice(3)) + 1 + "";
+
+    if (time) {
+      //ABS21080001
+      increment = Number(id.slice(-4)) + 1 + "";
+      let fullYear = new Date().getFullYear() + "";
+      let monthNow = new Date().getMonth() + 1;
+      let year = id.slice(3, 5); //21
+      let month = id.slice(5, 7); //08
+      //if the month same
+      if (monthNow === Number(month)) {
+        masterId += year + month;
+      }
+      //if the month not same
+      else {
+        // if the month 9 change to 09
+        monthNow = monthNow < 9 ? "0" + monthNow : monthNow;
+        masterId += fullYear.slice(2) + monthNow;
+        increment = "0";
+      }
+    }
+    //0000
     let length = "0000".slice(increment.length);
 
     //DIV0001

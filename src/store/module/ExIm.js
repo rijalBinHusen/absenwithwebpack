@@ -102,6 +102,7 @@ const ExIm = {
       dispatch("Bagian/bagian", "", { root: true });
       dispatch("Level/level", "", { root: true });
       dispatch("Karyawan/karyawan", "", { root: true });
+      dispatch("Absen/absen", "", { root: true });
       //get all import record from indexeddb
       commit("importData");
       //get all export record from indexeddb
@@ -131,6 +132,7 @@ const ExIm = {
       dispatch("Bagian/empty", {}, { root: true });
       dispatch("Level/empty", {}, { root: true });
       dispatch("Karyawan/empty", {}, { root: true });
+      dispatch("Absen/empty", {}, { root: true });
       mydb.emptyStore("import");
       mydb.emptyStore("export");
       commit("empty");
