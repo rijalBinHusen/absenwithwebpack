@@ -65,6 +65,9 @@ export default {
         result[index].divisi = JSON.parse(
           this.$store.getters["Divisi/divisiId"](val.divisi)
         ).name;
+        result[index].bagian = JSON.parse(
+          this.$store.getters["Bagian/bagianId"](val.bagian)
+        ).name;
       });
       return result;
     },

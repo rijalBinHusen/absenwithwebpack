@@ -2,12 +2,12 @@
   <div>
     <!-- Id karyawan -->
     <div>
-      <lable class="w3-left">
+      <label class="w3-left">
         <h3>
           <font-awesome-icon icon="fingerprint" />
           Id karyawan
         </h3>
-      </lable>
+      </label>
 
       <input
         type="text"
@@ -21,12 +21,12 @@
 
     <!-- Nama Karyawan -->
     <div>
-      <lable class="w3-left">
+      <label class="w3-left">
         <h3>
           <font-awesome-icon icon="user" />
           Nama karyawan
         </h3>
-      </lable>
+      </label>
 
       <input
         type="text"
@@ -40,12 +40,12 @@
 
     <!-- Divisi karyawan -->
     <div>
-      <lable class="w3-left">
+      <label class="w3-left">
         <h3>
           <font-awesome-icon icon="archway" />
           Divisi
         </h3>
-      </lable>
+      </label>
       <select
         @change="karyawan.divisi = $event.target.value"
         class="w3-input w3-margin-top"
@@ -61,12 +61,12 @@
 
     <!-- Bagian karyawan -->
     <div>
-      <lable class="w3-left">
+      <label class="w3-left">
         <h3>
           <font-awesome-icon icon="user-cog" />
           Bagian
         </h3>
-      </lable>
+      </label>
       <select
         @change="karyawan.bagian = $event.target.value"
         class="w3-input w3-margin-top"
@@ -82,12 +82,12 @@
 
     <!-- Level karyawan -->
     <div>
-      <lable class="w3-left">
+      <label class="w3-left">
         <h3>
           <font-awesome-icon icon="user" />
           Level
         </h3>
-      </lable>
+      </label>
       <select
         @change="karyawan.level = $event.target.value"
         class="w3-input w3-margin-top"
