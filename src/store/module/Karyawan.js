@@ -12,7 +12,7 @@ const Karyawan = {
     },
     update(state, val) {
       state.karyawan.map((obj, index) => {
-        obj.id == val.id ? (state.karyawan[index].name = val.name) : false;
+        obj.id == val.id ? (state.karyawan[index] = val) : false;
       });
     },
     karyawan(state, val) {
@@ -44,7 +44,7 @@ const Karyawan = {
       dispatch("ExIm/importAppend", false, { root: true });
     },
     update({ commit, dispatch }, val) {
-      mydb.update("karyawan", { id: val.id }, { name: val.name });
+      mydb.update("karyawan", { id: val.id }, val);
       dispatch("ExIm/importAppend", false, { root: true });
       commit("update", val);
     },
@@ -62,11 +62,13 @@ const Karyawan = {
     karyawan(state) {
       return JSON.stringify(state.karyawan);
     },
-    edit(state, getters, rootGetters) {
-      return rootGetters["Modal"].id
-        ? state.karyawan.filter((val) => {
-            return val.id === rootGetters["Modal"].id;
-          })
+    edit(state, getters, rootState) {
+      return rootState["Modal"].id
+        ? JSON.stringify(
+            state.karyawan.find((val) => {
+              return val.id === rootState["Modal"].id;
+            })
+          )
         : false;
     },
   },

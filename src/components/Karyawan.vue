@@ -55,6 +55,9 @@ export default {
       this.$store.dispatch("Modal/modalChange", { mode: "Tambah", id: "" });
       console.log(this.$store.getters["Karyawan/karyawan"]);
     },
+    edit(id) {
+      this.$store.dispatch("Modal/modalChange", { mode: "Update", id: id });
+    },
   },
   computed: {
     karyawan() {

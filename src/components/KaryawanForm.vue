@@ -50,6 +50,7 @@
         @change="karyawan.divisi = $event.target.value"
         class="w3-input w3-margin-top"
         required
+        :value="karyawan.divisi"
       >
         <option value="" selected>Pilih divisi</option>
         <option v-for="div in divisi" :key="div.id" :value="div.id">
@@ -70,6 +71,7 @@
       <select
         @change="karyawan.bagian = $event.target.value"
         class="w3-input w3-margin-top"
+        :value="karyawan.bagian"
         required
       >
         <option value="" selected>Pilih Bagian</option>
@@ -91,6 +93,7 @@
       <select
         @change="karyawan.level = $event.target.value"
         class="w3-input w3-margin-top"
+        :value="karyawan.level"
         required
       >
         <option value="" selected>Pilih Level</option>
@@ -110,7 +113,7 @@
           ? 'w3-disabled w3-red'
           : 'w3-teal ',
       ]"
-      value="Tambah"
+      :value="[karyawan.id ? 'Update' : 'Tambah']"
       @click="send"
     />
 
@@ -123,13 +126,11 @@ export default {
   name: "KaryawanForm",
   data() {
     return {
-      karyawan: {
-        idKaryawan: "",
-        nama: "",
-        divisi: "",
-        bagian: "",
-        level: "",
-      },
+      karyawan: this.$store.getters["Karyawan/edit"]
+        ? //if mode is edit
+          JSON.parse(this.$store.getters["Karyawan/edit"])
+        : //if mode is add{
+          { idKaryawan: "", nama: "", divisi: "", bagian: "", level: "" },
       divisi: this.$store.getters["Divisi/divisi"],
       bagian: this.$store.getters["Bagian/bagian"],
       level: this.$store.getters["Level/level"],
@@ -139,7 +140,7 @@ export default {
     send() {
       !Object.values(this.karyawan).includes("")
         ? this.$store.dispatch("Karyawan/tambah", this.karyawan)
-        : false;
+        : this.$store.dispatch("Karyawan/update", this.karyawan)
       //close the modal
       this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
     },
