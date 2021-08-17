@@ -69,7 +69,7 @@ const Absen = {
   },
   getters: {
     absen(state) {
-      return state.absen;
+      return JSON.stringify(state.absen);
     },
     absenId: (state) => (id) => {
       return JSON.stringify(state.absen.find((val) => val.id === id));

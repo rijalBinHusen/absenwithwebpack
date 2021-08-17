@@ -51,7 +51,7 @@
         <td :key="key" v-for="key in heads">
           <input
             type="text"
-            class="w3-input"
+            class="w3-input w3-white w3-hover-white w3-small"
             placeholder="Search"
             :value="[
               deData.searchKey.includes(key)
@@ -77,7 +77,7 @@
             v-if="option.includes('edit')"
             class="w3-tag w3-teal w3-round"
           >
-            Edit <font-awesome-icon :icon="icon" />
+            Edit <font-awesome-icon icon="pencil-alt" />
           </a>
 
           <a

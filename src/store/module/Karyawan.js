@@ -85,6 +85,11 @@ const Karyawan = {
                   "Id"
               ](target[key])
             ).name);
+        if (key === "level") {
+          result.jamKerja = JSON.parse(
+            rootGetters["Level/levelId"](target[key])
+          ).jamKerja;
+        }
       });
       return JSON.stringify(result);
     },

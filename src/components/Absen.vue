@@ -36,29 +36,59 @@
 						</span> -->
     </div>
 
-    <!-- <datatable 
-                    :heads="headShow" 
-                    :datanya="dataAbsen"
-                    :option="['edit', 'delete']"
-                    :keydata="'id_absen'"
-                    :icon="icon"
-					:id="'table2'"
-					@delete="$emit('dialog', $event)"
-                    @edit="deData = cariVal(datanya, {'equalTo': ['id_absen', $event]});
-					deData.mode = 'edit';
-					$emit('modal', deData);
-					" -->
-    >
+    <Datatable
+      :heads="[
+        'tanggal',
+        'nama',
+        'divisi',
+        'bagian',
+        'level',
+        'jamKerja',
+        'masuk',
+        'istirahat',
+        'pulang',
+        'keterangan',
+      ]"
+      :datanya="absen"
+      :option="['edit']"
+      :keydata="'id'"
+      @edit="edit($event)"
+    />
   </div>
 </template>
 
 <script>
+import Datatable from "./Datatable.vue";
+
 export default {
   name: "Absen",
+  computed: {
+    absen() {
+      let result = new Array();
+      JSON.parse(this.$store.getters["Absen/absen"]).map((val, index) => {
+        result[index] = val;
+        let karyawan = JSON.parse(
+          this.$store.getters["Karyawan/karyawanId"](val.karyawan)
+        );
+        result[index].nama = karyawan.nama;
+        result[index].divisi = karyawan.divisi;
+        result[index].bagian = karyawan.bagian;
+        result[index].level = karyawan.level;
+        result[index].jamKerja = karyawan.jamKerja;
+      });
+      return result;
+    },
+  },
   methods: {
     modalChange() {
       this.$store.dispatch("Modal/modalChange", { mode: "Tambah", id: "" });
     },
+    edit(id) {
+      this.$store.dispatch("Modal/modalChange", { mode: "Update", id: id });
+    },
+  },
+  components: {
+    Datatable,
   },
 };
 </script>
