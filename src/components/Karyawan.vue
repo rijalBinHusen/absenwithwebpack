@@ -68,6 +68,9 @@ export default {
         result[index].bagian = JSON.parse(
           this.$store.getters["Bagian/bagianId"](val.bagian)
         ).name;
+        result[index].level = JSON.parse(
+          this.$store.getters["Level/levelId"](val.level)
+        ).name;
       });
       return result;
     },

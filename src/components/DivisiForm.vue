@@ -37,7 +37,6 @@ export default {
   },
   methods: {
     send() {
-      console.log(this.divisi.name)
       // check is the field not null
       this.divisi.name !== ""
         ? //check what mode, update or add
