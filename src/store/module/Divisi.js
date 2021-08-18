@@ -62,7 +62,13 @@ const Divisi = {
       return JSON.stringify(state.divisi);
     },
     divisiId: (state) => (id) => {
-      return JSON.stringify(state.divisi.find((val) => val.id === id));
+      let search = state.divisi.find((val) => val.id === id);
+      return search
+        ? JSON.stringify(search)
+        : JSON.stringify({
+            id: "tidak ditemukan",
+            name: "Divisi tidak ditemukan",
+          });
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id

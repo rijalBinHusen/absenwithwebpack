@@ -74,23 +74,32 @@ const Karyawan = {
     karyawanId: (state, getters, rootState, rootGetters) => (id) => {
       let result = {};
       let target = state.karyawan.find((val) => val.id === id);
-      Object.keys(target).map((key) => {
-        key === "id" || key === "idKaryawan" || key === "nama"
-          ? (result[key] = target[key])
-          : (result[key] = JSON.parse(
-              rootGetters[
-                key.charAt(0).toUpperCase().concat(key.slice(1)) +
-                  "/" +
-                  key +
-                  "Id"
-              ](target[key])
-            ).name);
-        if (key === "level") {
-          result.jamKerja = JSON.parse(
-            rootGetters["Level/levelId"](target[key])
-          ).jamKerja;
-        }
-      });
+      target
+        ? Object.keys(target).map((key) => {
+            key === "id" || key === "idKaryawan" || key === "nama"
+              ? (result[key] = target[key])
+              : (result[key] = JSON.parse(
+                  rootGetters[
+                    key.charAt(0).toUpperCase().concat(key.slice(1)) +
+                      "/" +
+                      key +
+                      "Id"
+                  ](target[key])
+                ).name);
+            if (key === "level") {
+              result.jamKerja = JSON.parse(
+                rootGetters["Level/levelId"](target[key])
+              ).jamKerja;
+            }
+          })
+        : (result = {
+            id: "Tidak ditemukan",
+            idKaryawan: "Tidak ditemukan",
+            nama: "Tidak ditemukan",
+            level: "Tidak ditemukan",
+            bagian: "Tidak ditemukan",
+            divisi: "Tidak ditemukan",
+          });
       return JSON.stringify(result);
     },
   },

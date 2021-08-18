@@ -129,13 +129,34 @@
           <!-- Keterangan field -->
         </span>
       </div>
-      <!--Tombol untuk tambah record-->
-      <div class="w3-right">
-        <input
-          type="submit"
-          class="w3-left w3-teal w3-round w3-button"
-          :value="absen.id ? 'Update' : 'Tambah'"
-        />
+      <!--Tombol -->
+      <div class="">
+        <!--Tombol untuk import record-->
+        <span>
+          <input
+            type="button"
+            class="
+              w3-left
+              w3-border-teal
+              w3-border
+              w3-white
+              w3-hover-white
+              w3-round
+              w3-button
+            "
+            value="Import"
+            @click="gotoNav('Importer')"
+          />
+        </span>
+
+        <!--Tombol untuk tambah record-->
+        <span class="w3-right">
+          <input
+            type="submit"
+            class="w3-left w3-teal w3-round w3-button"
+            :value="absen.id ? 'Update' : 'Tambah'"
+          />
+        </span>
       </div>
     </form>
   </div>
@@ -184,6 +205,9 @@ export default {
           )
         ).id;
       }
+    },
+    gotoNav(nav) {
+      this.$store.dispatch("Navbar/gotoNav", nav);
     },
   },
 };
