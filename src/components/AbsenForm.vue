@@ -145,7 +145,7 @@
               w3-button
             "
             value="Import"
-            @click="gotoNav('Importer')"
+            @click="gotoNav('AbsenImport')"
           />
         </span>
 

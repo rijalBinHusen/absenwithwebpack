@@ -59,7 +59,7 @@ const Divisi = {
   },
   getters: {
     divisi(state) {
-      return JSON.stringify(state.divisi);
+      return state.divisi;
     },
     divisiId: (state) => (id) => {
       let search = state.divisi.find((val) => val.id === id);

@@ -69,6 +69,7 @@ const Level = {
         : JSON.stringify({
             id: "tidak ditemukan",
             name: "Level tidak ditemukan",
+            jamKerja: "0",
           });
     },
     edit(state, getters, rootGetters) {

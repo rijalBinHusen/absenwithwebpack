@@ -30,6 +30,7 @@ import BagianForm from "./BagianForm.vue";
 import LevelForm from "./LevelForm.vue";
 import KaryawanForm from "./KaryawanForm.vue";
 import AbsenForm from "./AbsenForm.vue";
+import AbsenImportForm from "./AbsenImportForm.vue";
 
 export default {
   name: "Modal",
@@ -54,6 +55,7 @@ export default {
     LevelForm,
     KaryawanForm,
     AbsenForm,
+    AbsenImportForm,
   },
 };
 </script>
