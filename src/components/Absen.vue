@@ -24,16 +24,25 @@
         </span>
       </span>
     </div>
-    <br /><br />
+    <br />
     <div class="w3-xlarge w3-border">
       Dari tanggal :
-      <input class="w3-button w3-large w3-white w3-hover-white" type="date" />
+      <input
+        @change="tanggalMulai = $event.target.value"
+        class="w3-button w3-large w3-white w3-hover-white"
+        type="date"
+      />
       Sampai tanggal :
-      <input class="w3-button w3-large w3-white w3-hover-white" type="date" />
+      <input
+        @change="tanggalSampai = $event.target.value"
+        class="w3-button w3-large w3-white w3-hover-white"
+        type="date"
+      />
       <input
         class="
           w3-medium w3-tag w3-border-white w3-round w3-white w3-hover-white
         "
+        @click="tampilkan"
         type="submit"
         value="Tampilkan"
       />
@@ -42,9 +51,10 @@
     <Datatable
       :heads="headShow"
       :datanya="absen"
-      :option="['edit']"
+      :option="['edit', 'delete']"
       :keydata="'id'"
       @edit="edit($event)"
+      @delete="del($event)"
     />
   </div>
 </template>
@@ -90,6 +100,8 @@ export default {
             "selisih",
             "keterangan",
           ],
+      tanggalMulai: "",
+      tanggalSampai: "",
     };
   },
   computed: {
@@ -148,6 +160,24 @@ export default {
       }
 
       return Number(Apulang) - (Number(Amasuk) + 1) - istirahat;
+    },
+    tampilkan() {
+      //jika 2 tanggal sama
+      if (this.tanggalMulai == this.tanggalSampai) {
+        this.$store.dispatch("Absen/tanggal", { tanggal: this.tanggalMulai });
+      }
+      //jika 2 tanggal tidak sama
+      console.log(this.tanggalMulai, this.tanggalSampai);
+    },
+    getDaysArray(start, end) {
+      let arr = [];
+      for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+        arr.push(new Date(dt));
+      }
+      return arr.map((val) => val.toISOString().slice(0, 10));
+    },
+    del(val) {
+      console.log(val);
     },
   },
   components: {

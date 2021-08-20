@@ -30,45 +30,62 @@ export default {
       const reader = new FileReader();
 
       //when reading is completed load
-      reader.onload = (event) => this.send(event.target.result);
+      reader.onload = (event) => this.extract(event.target.result);
 
       reader.readAsText(ev.target.files[0]);
     },
-    send(val) {
+    extract(val) {
       let res = val.split("\r\n");
       //send data to vuex
       //   this.$store.dispatch("ExIm/importerData", val);
       // eslint-disable-next-line no-unused-vars
       let tanggal = "";
-      let absen = [];
-      res.forEach((val) => {
-        const temp = val.split(",,");
-        //jika dia tanggal
-        if (temp[3] && temp[3].split("-").length === 3) {
-          tanggal += temp[3].split("-")[2] + "-";
-          tanggal += new Date(temp[3]).getMonth() + 1 + "-";
-          tanggal += temp[3].split("-")[0];
-          // console.log(temp[3])
-        }
-        //jika ada tanggal dan dia absen
-        else {
-          if (tanggal) {
-            !isNaN(temp[1]) && temp[1].length > 4
-              ? absen.push({
-                  tanggal: tanggal,
-                  karyawan: temp[1],
-                  masuk: temp[6],
-                  istirahat: "1",
-                  pulang: temp[7],
-                  keterangan: "",
-                })
-              : false;
+      let extracting = new Promise((resolve) => {
+        res.forEach((val, index) => {
+          const temp = val.split(",");
+          // jika dia tanggal
+          if (temp[6] && temp[6].split("-").length === 3) {
+            tanggal = temp[6].split("-")[2] + "-";
+            tanggal +=
+              new Date(temp[6]).getMonth() < 9
+                ? "0" + (new Date(temp[6]).getMonth() + 1) + "-"
+                : new Date(temp[6]).getMonth() + 1 + "-";
+            tanggal += temp[6].split("-")[0];
+            // console.log(temp[3])
           }
-        }
-        // console.log(temp)
+          //jika ada tanggal dan dia absen
+          else {
+            if (tanggal) {
+              !isNaN(temp[3]) && temp[3].length > 4
+                ? this.$store.dispatch("Absen/tambah", {
+                    id: this.generator(20),
+                    tanggal: tanggal,
+                    karyawan: temp[3],
+                    masuk: temp[13],
+                    istirahat: "1",
+                    pulang: temp[15],
+                    keterangan: temp[13] ? "" : "Tidak masuk",
+                  })
+                : false;
+            }
+          }
+          if (index + 1 === res.length) resolve();
+        });
       });
-      console.log(tanggal)
-      console.log(absen);
+      extracting.then(() => {
+        this.$store.dispatch("Absen/absen", { mode: "", id: "" });
+        this.$store.dispatch("Navbar/gotoNav", "Absen");
+        this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
+      });
+    },
+    generator(length) {
+      let str =
+        "qwertyuiopasdfghjkllzxcvbnm1234567890QWERYUIOPASDFGHJKLZXCVBNM";
+      let result = "";
+      for (let i = 1; i <= Number(length); i++) {
+        result += str[Math.round(Math.random() * (str.length - 1))];
+      }
+      return result;
     },
   },
 };

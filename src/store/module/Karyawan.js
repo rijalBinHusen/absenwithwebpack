@@ -73,7 +73,7 @@ const Karyawan = {
     },
     karyawanId: (state, getters, rootState, rootGetters) => (id) => {
       let result = {};
-      let target = state.karyawan.find((val) => val.id === id);
+      let target = state.karyawan.find((val) => val.idKaryawan === id);
       target
         ? Object.keys(target).map((key) => {
             key === "id" || key === "idKaryawan" || key === "nama"

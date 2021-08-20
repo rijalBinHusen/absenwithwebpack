@@ -58,13 +58,22 @@ const Absen = {
       commit("update", val);
     },
     absen({ commit }) {
-      mydb.getData({ store: "absen", orderBy: "id" }).then((res) => {
-        commit("absen", res);
-      });
+      mydb
+        .getData({ store: "absen", orderBy: "tanggal", desc: true, limit: 100 })
+        .then((res) => {
+          commit("absen", res);
+        });
     },
     empty({ commit }) {
       mydb.emptyStore("absen");
       commit("empty");
+    },
+    tanggal({ commit }, val) {
+      Array.isArray(val)
+        ? false
+        : mydb.findData("absen", val).then((res) => {
+            commit("absen", res);
+          });
     },
   },
   getters: {
@@ -82,6 +91,11 @@ const Absen = {
             })
           )
         : false;
+    },
+    lastId() {
+      return mydb
+        .getData({ store: "absen", orderBy: "id", desc: true, limit: 1 })
+        .then((val) => val.id);
     },
   },
 };

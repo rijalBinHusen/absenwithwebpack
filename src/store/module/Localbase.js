@@ -50,6 +50,7 @@ export default {
     return db.collection(deData.store).get();
   },
   findData: function (store, keyword) {
+    // keyword = {key: value}
     return db.collection(store).doc(keyword).get();
   },
   deleteCollection: function (store) {

@@ -184,7 +184,7 @@ export default {
   methods: {
     send() {
       ///if not every field not null
-      !Object.values(this.absen).includes("")
+      this.absen.karyawan !== ""
         ? this.absen.id
           ? this.$store.dispatch("Absen/update", this.absen)
           : this.$store.dispatch("Absen/tambah", this.absen)
@@ -201,9 +201,9 @@ export default {
         //
         this.absen.karyawan = JSON.parse(
           this.$store.getters["Karyawan/karyawanId"](
-            this.karyawan[ev.split(" - ")[0]].id
+            this.karyawan[ev.split(" - ")[0]].idKaryawan
           )
-        ).id;
+        ).idKaryawan;
       }
     },
     gotoNav(nav) {

@@ -75,7 +75,7 @@
               deData.nowSort = null;
             "
             v-if="option.includes('edit')"
-            class="w3-tag w3-teal w3-round"
+            class="w3-tag w3-teal w3-round w3-margin-right"
           >
             Edit <font-awesome-icon icon="pencil-alt" />
           </a>
@@ -85,7 +85,7 @@
             v-if="option.includes('delete')"
             class="w3-tag w3-pink w3-round"
           >
-            Delete <i class="fa fa-trash-o"></i>
+            Delete <font-awesome-icon icon="trash-alt" />
           </a>
 
           <button
