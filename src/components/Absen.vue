@@ -55,12 +55,16 @@
       :keydata="'id'"
       @edit="edit($event)"
       @delete="del($event)"
+      :id="'table_absen'"
     />
+
+    <Dialog v-if="dialog" @del="del($event)" />
   </div>
 </template>
 
 <script>
 import Datatable from "./Datatable.vue";
+import Dialog from "./Dialog.vue";
 
 export default {
   name: "Absen",
@@ -102,6 +106,7 @@ export default {
           ],
       tanggalMulai: "",
       tanggalSampai: "",
+      dialog: false,
     };
   },
   computed: {
@@ -167,21 +172,38 @@ export default {
         this.$store.dispatch("Absen/tanggal", { tanggal: this.tanggalMulai });
       }
       //jika 2 tanggal tidak sama
-      console.log(this.tanggalMulai, this.tanggalSampai);
+      else {
+        this.$store.dispatch(
+          "Absen/tanggal",
+          this.getDaysArray(this.tanggalMulai, this.tanggalSampai)
+        );
+      }
     },
     getDaysArray(start, end) {
       let arr = [];
-      for (let dt = new Date(start); dt <= end; dt.setDate(dt.getDate() + 1)) {
+      for (
+        let dt = new Date(start);
+        dt <= new Date(end);
+        dt.setDate(dt.getDate() + 1)
+      ) {
         arr.push(new Date(dt));
       }
       return arr.map((val) => val.toISOString().slice(0, 10));
     },
     del(val) {
-      console.log(val);
+      if (val === "cancel") {
+        this.dialog = false;
+      } else if (val === "yes") {
+        this.$store.dispatch("Absen/hapus", this.dialog);
+        this.dialog = false;
+      } else {
+        this.dialog = val;
+      }
     },
   },
   components: {
     Datatable,
+    Dialog,
   },
 };
 </script>

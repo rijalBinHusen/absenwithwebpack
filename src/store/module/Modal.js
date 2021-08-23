@@ -4,6 +4,7 @@ const Modal = {
     status: false,
     id: "",
     mode: "",
+    dialog: "",
   },
   mutations: {
     modalChange(state, param) {
@@ -15,6 +16,10 @@ const Modal = {
       state.mode = "loading";
       status == "open" ? (state.status = true) : (state.status = false);
     },
+    dialog(state) {
+      state.dialog = !state.dialog;
+      console.log("muttaion dialog");
+    },
   },
   actions: {
     modalChange({ commit }, param) {
@@ -22,6 +27,10 @@ const Modal = {
     },
     loading({ commit }, status) {
       commit("loading", status);
+    },
+    dialog({ commit }, val) {
+      console.log("dispatch dialog");
+      commit("dialog", val);
     },
   },
   getters: {
@@ -31,6 +40,9 @@ const Modal = {
         id: state.id,
         mode: state.mode,
       };
+    },
+    dialog(state) {
+      return state.dialog;
     },
   },
 };

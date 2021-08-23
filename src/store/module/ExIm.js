@@ -56,6 +56,7 @@ const ExIm = {
       let bagian = mydb.getData({ store: "bagian" });
       let level = mydb.getData({ store: "level" });
       let karyawan = mydb.getData({ store: "karyawan" });
+      let absen = mydb.getData({ store: "absen" });
       let impor = mydb.getData({
         store: "import",
         orderBy: "time",
@@ -75,6 +76,7 @@ const ExIm = {
         bagian,
         level,
         karyawan,
+        absen,
       ]).then((val) => ({
         import: val[0],
         export: val[1],
@@ -82,6 +84,7 @@ const ExIm = {
         bagian: val[3],
         level: val[4],
         karyawan: val[5],
+        absen: val[6],
         status: true,
       }));
       // state.statusExport = true;

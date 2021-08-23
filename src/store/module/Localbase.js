@@ -62,13 +62,17 @@ export default {
   emptyStore: function (store) {
     db.collection(store).set([]);
   },
-  generateId: function (id, time) {
+  deleteDocument: function (store, keyword) {
+    //keyword = {key: value}
+    db.collection(store).doc(keyword).delete();
+  },
+  generateId: function (id, waktu) {
     //DIV
     let masterId = id.slice(0, 3);
     //0003 as 3 on will be +1
     let increment = Number(id.slice(3)) + 1 + "";
 
-    if (time) {
+    if (waktu) {
       //ABS21080001
       increment = Number(id.slice(-4)) + 1 + "";
       let fullYear = new Date().getFullYear() + "";

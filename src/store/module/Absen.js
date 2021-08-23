@@ -21,6 +21,15 @@ const Absen = {
     empty(state) {
       state.absen = [];
     },
+    push(state, val) {
+      val.forEach((val) => {
+        state.absen.push(val);
+      });
+    },
+    hapus(state, id) {
+      let inde = state.absen.findIndex((val) => val.id === id);
+      state.absen.splice(inde, 1);
+    },
   },
   actions: {
     // eslint-disable-next-line no-unused-vars
@@ -69,19 +78,55 @@ const Absen = {
       commit("empty");
     },
     tanggal({ commit }, val) {
-      Array.isArray(val)
-        ? false
-        : mydb.findData("absen", val).then((res) => {
-            commit("absen", res);
+      if (Array.isArray(val)) {
+        commit("absen", []);
+        val.map((val) => {
+          mydb.findData("absen", { tanggal: val }).then((res) => {
+            commit("push", res);
           });
+        });
+        // Promise.all(getAll).then((res) => {})
+      } else {
+        mydb.findData("absen", val).then((res) => {
+          commit("absen", res);
+        });
+      }
+    },
+    hapus({ commit }, val) {
+      commit("hapus", val);
+      mydb.deleteDocument("absen", { id: val });
     },
   },
   getters: {
     absen(state) {
-      return JSON.stringify(state.absen);
+      return state.absen
+        ? JSON.stringify(state.absen)
+        : JSON.stringify([
+            {
+              id: "Tidak ada data",
+              karyawan: "Tidak ada data",
+              tanggal: "Tidak ada data",
+              masuk: "Tidak ada data",
+              istirahat: "Tidak ada data",
+              pulang: "Tidak ada data",
+              keterangan: "Tidak ada data",
+            },
+          ]);
     },
     absenId: (state) => (id) => {
-      return JSON.stringify(state.absen.find((val) => val.id === id));
+      return state.absen
+        ? JSON.stringify(state.absen.find((val) => val.id === id))
+        : JSON.stringify([
+            {
+              id: "Tidak ada data",
+              karyawan: "Tidak ada data",
+              tanggal: "Tidak ada data",
+              masuk: "Tidak ada data",
+              istirahat: "Tidak ada data",
+              pulang: "Tidak ada data",
+              keterangan: "Tidak ada data",
+            },
+          ]);
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
