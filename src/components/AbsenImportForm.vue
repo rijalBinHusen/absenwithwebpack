@@ -69,7 +69,7 @@ export default {
                     karyawan: temp[3],
                     masuk: temp[13],
                     istirahat:
-                      new Date(tanggal).getDay === 6 &&
+                      new Date(tanggal).getDay() === 6 &&
                       this.jamTotal(temp[13], temp[15], 0) === 5
                         ? "0"
                         : "1",

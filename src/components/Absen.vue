@@ -46,6 +46,12 @@
         type="submit"
         value="Tampilkan"
       />
+      <input
+        class="w3-medium w3-tag w3-border-white w3-round w3-teal w3-hover-white"
+        @click="download"
+        type="submit"
+        value="Download"
+      />
     </div>
 
     <Datatable
@@ -201,6 +207,31 @@ export default {
       } else {
         this.dialog = val;
       }
+    },
+    download() {
+      let result = "";
+      this.absen.forEach((val, index) => {
+        let row = "";
+        if (index == 0) {
+          Object.keys(val).map((va) => (row += va + ","));
+          row += "\r\n";
+        }
+
+        Object.values(val).map((va) => (row += va + ","));
+        row += "\r\n";
+
+        result += row;
+      });
+
+      // download area
+
+      var a = document.createElement("a");
+      var file = new Blob([result], {
+        type: "text/plain",
+      });
+      a.href = URL.createObjectURL(file);
+      a.download = "fileName.csv";
+      a.click();
     },
   },
   components: {
