@@ -122,7 +122,9 @@ export default {
         result[index].divisi = karyawan.divisi;
         result[index].bagian = karyawan.bagian;
         result[index].level = karyawan.level;
-        result[index].jamKerja = karyawan.jamKerja;
+        result[index].jamKerja = karyawan.jamKerja
+          ? karyawan.jamKerja[new Date(val.tanggal).getDay()]
+          : 0;
         result[index].total = this.jamTotal(
           val.masuk,
           val.pulang,

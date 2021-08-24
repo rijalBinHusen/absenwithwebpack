@@ -74,10 +74,5 @@ export default {
     },
     // download(jsonData, 'json.txt', 'text/plain');
   },
-  computed: {
-    exportData() {
-      return this.$store.getters["ExIm/exportData"];
-    },
-  },
 };
 </script>

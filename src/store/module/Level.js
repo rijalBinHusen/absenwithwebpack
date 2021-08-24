@@ -81,6 +81,18 @@ const Level = {
           )
         : false;
     },
+    jamKerja: (state) => (id) => {
+      let search = state.level.find((val) => val.id === id);
+      return [
+        0,
+        search.jamKerja,
+        search.jamKerja,
+        search.jamKerja,
+        search.jamKerja,
+        search.jamKerja,
+        5,
+      ];
+    },
   },
 };
 

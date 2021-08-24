@@ -138,9 +138,13 @@ export default {
   },
   methods: {
     send() {
+      // console.log(this.karyawan);
+      // console.log(this.karyawan.id)
       !Object.values(this.karyawan).includes("")
-        ? this.$store.dispatch("Karyawan/tambah", this.karyawan)
-        : this.$store.dispatch("Karyawan/update", this.karyawan);
+        ? this.karyawan.id
+          ? this.$store.dispatch("Karyawan/update", this.karyawan)
+          : this.$store.dispatch("Karyawan/tambah", this.karyawan)
+        : false;
       //close the modal
       this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
     },

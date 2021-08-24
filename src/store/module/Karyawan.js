@@ -87,9 +87,7 @@ const Karyawan = {
                   ](target[key])
                 ).name);
             if (key === "level") {
-              result.jamKerja = JSON.parse(
-                rootGetters["Level/levelId"](target[key])
-              ).jamKerja;
+              result.jamKerja = rootGetters["Level/jamKerja"](target[key]);
             }
           })
         : (result = {

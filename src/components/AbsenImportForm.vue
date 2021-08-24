@@ -3,10 +3,11 @@
     <p class="w3-xlarge">Import Absen</p>
     <input
       class="w3-hide"
-      @change.prevent="impor($event)"
+      @change.prevent="read($event)"
       type="file"
       accept=".csv"
       ref="importerAbsen"
+      multiple
     /><br />
     <font-awesome-icon
       @click="importerField"
@@ -23,7 +24,12 @@ export default {
     importerField() {
       this.$refs.importerAbsen.click();
     },
-    impor(ev) {
+    read(ev) {
+      for (let i = 0; i < ev.target.files.length; i++) {
+        this.impor(ev.target.files[i]);
+      }
+    },
+    impor(files) {
       //buka loader
       this.$store.dispatch("Modal/loading", "open");
       // console.log(ev);
@@ -32,7 +38,7 @@ export default {
       //when reading is completed load
       reader.onload = (event) => this.extract(event.target.result);
 
-      reader.readAsText(ev.target.files[0]);
+      reader.readAsText(files);
     },
     extract(val) {
       let res = val.split("\r\n");
@@ -62,7 +68,11 @@ export default {
                     tanggal: tanggal,
                     karyawan: temp[3],
                     masuk: temp[13],
-                    istirahat: "1",
+                    istirahat:
+                      new Date(tanggal).getDay === 6 &&
+                      this.jamTotal(temp[13], temp[15], 0) === 5
+                        ? "0"
+                        : "1",
                     pulang: temp[15],
                     keterangan: temp[13] ? "" : "Tidak masuk",
                   })
@@ -86,6 +96,16 @@ export default {
         result += str[Math.round(Math.random() * (str.length - 1))];
       }
       return result;
+    },
+    jamTotal(masuk, pulang, istirahat) {
+      let Amasuk = masuk.split(":")[0];
+      let Apulang = pulang.split(":")[0];
+
+      if (Amasuk > Apulang) {
+        return Number(Apulang) + 24 - (Number(Amasuk) + 1) - istirahat;
+      }
+
+      return Number(Apulang) - (Number(Amasuk) + 1) - istirahat;
     },
   },
 };
