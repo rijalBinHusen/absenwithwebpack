@@ -99,34 +99,12 @@ const Absen = {
   },
   getters: {
     absen(state) {
-      return state.absen
-        ? JSON.stringify(state.absen)
-        : JSON.stringify([
-            {
-              id: "Tidak ada data",
-              karyawan: "Tidak ada data",
-              tanggal: "Tidak ada data",
-              masuk: "Tidak ada data",
-              istirahat: "Tidak ada data",
-              pulang: "Tidak ada data",
-              keterangan: "Tidak ada data",
-            },
-          ]);
+      return state.absen ? JSON.stringify(state.absen) : JSON.stringify([]);
     },
     absenId: (state) => (id) => {
       return state.absen
         ? JSON.stringify(state.absen.find((val) => val.id === id))
-        : JSON.stringify([
-            {
-              id: "Tidak ada data",
-              karyawan: "Tidak ada data",
-              tanggal: "Tidak ada data",
-              masuk: "Tidak ada data",
-              istirahat: "Tidak ada data",
-              pulang: "Tidak ada data",
-              keterangan: "Tidak ada data",
-            },
-          ]);
+        : JSON.stringify([]);
     },
     edit(state, getters, rootGetters) {
       return rootGetters["Modal"].id
