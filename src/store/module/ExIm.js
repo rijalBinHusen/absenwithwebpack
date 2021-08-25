@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 let mydb = require("./Localbase.js").default;
 const ExIm = {
   namespaced: true,
@@ -164,7 +165,10 @@ const ExIm = {
       });
       importProgress.then(() => {
         dispatch("importAppend", "imported");
-        dispatch("Modal/loading", "close", { root: true });
+        dispatch("getAllData");
+        setTimeout(() => {
+          dispatch("Modal/loading", "close", { root: true });
+        }, 2500 * Object.keys(val).length);
       });
     },
   },

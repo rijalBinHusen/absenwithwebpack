@@ -22,6 +22,7 @@ export default {
   data() {
     return {
       status: true,
+      exportData: this.$store.getters["ExIm/exportData"],
     };
   },
   methods: {

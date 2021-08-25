@@ -3,6 +3,7 @@
     <div class="w3-modal-content w3-animate-zoom">
       <header class="w3-container w3-teal">
         <span
+          v-if="modal.mode !== 'loading'"
           @click="modalChange('')"
           class="w3-xlarge w3-button w3-display-topright w3-teal"
         >

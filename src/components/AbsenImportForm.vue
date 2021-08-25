@@ -25,13 +25,19 @@ export default {
       this.$refs.importerAbsen.click();
     },
     read(ev) {
+      //buka loader
+      this.$store.dispatch("Modal/loading", "open");
+
+      setTimeout(() => {
+        this.$store.dispatch("Modal/loading", "close");
+        this.$store.dispatch("Absen/absen");
+      }, 1500 * ev.target.files.length);
+
       for (let i = 0; i < ev.target.files.length; i++) {
         this.impor(ev.target.files[i]);
       }
     },
     impor(files) {
-      //buka loader
-      this.$store.dispatch("Modal/loading", "open");
       // console.log(ev);
       const reader = new FileReader();
 
@@ -42,8 +48,6 @@ export default {
     },
     extract(val) {
       let res = val.split("\r\n");
-      //send data to vuex
-      //   this.$store.dispatch("ExIm/importerData", val);
       // eslint-disable-next-line no-unused-vars
       let tanggal = "";
       let extracting = new Promise((resolve) => {
@@ -83,9 +87,7 @@ export default {
         });
       });
       extracting.then(() => {
-        this.$store.dispatch("Absen/absen", { mode: "", id: "" });
         this.$store.dispatch("Navbar/gotoNav", "Absen");
-        this.$store.dispatch("Modal/modalChange", { mode: "", id: "" });
       });
     },
     generator(length) {

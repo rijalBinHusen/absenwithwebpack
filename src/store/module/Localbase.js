@@ -11,10 +11,10 @@ export default {
     //(nameStore, {id: idData}, {keyToUpdate: 'new value update'})
     db.collection(store).doc(id).update(val);
   },
-  reWrite: function (store, id, val) {
+  reWrite: function (store, val) {
     //(nameStore, {id: idData}, {key: 'new value'})
     //replace old data with the new one
-    db.collection(store).doc(id).set(val);
+    db.collection(store).set(val);
   },
   getData: function (deData) {
     //deData = {'store': nameOfStoreData, 'orderBy': keyData, 'desc': Boolean, 'limit': number}

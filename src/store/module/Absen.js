@@ -3,7 +3,7 @@ let mydb = require("./Localbase").default;
 const Absen = {
   namespaced: true,
   state: {
-    absen: "",
+    absen: [],
   },
   mutations: {
     tambah(state, val) {
