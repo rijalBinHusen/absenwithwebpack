@@ -48,7 +48,7 @@
       />
       <input
         class="w3-medium w3-tag w3-border-white w3-round w3-teal w3-hover-white"
-        @click="download"
+        @click="startDownload"
         type="submit"
         value="Download"
       />
@@ -62,6 +62,7 @@
       @edit="edit($event)"
       @delete="del($event)"
       :id="'table_absen'"
+      v-if="!downloading"
     />
 
     <Dialog v-if="dialog" :danger="danger" @del="del($event)" />
@@ -114,6 +115,7 @@ export default {
       tanggalSampai: "",
       dialog: false,
       danger: false,
+      downloading: false,
     };
   },
   computed: {
@@ -216,6 +218,16 @@ export default {
         this.dialog = val;
       }
     },
+    startDownload() {
+      //buka loader
+      this.$store.dispatch("Modal/loading", "open");
+      this.downloading = true;
+      let jumlah = this.getDaysArray(this.tanggalMulai, this.tanggalSampai);
+      this.$store.dispatch("Absen/tanggal", jumlah);
+      setTimeout(() => {
+        this.download();
+      }, 300 * jumlah.length);
+    },
     download() {
       let result = "";
       this.absen.forEach((val, index) => {
@@ -245,6 +257,10 @@ export default {
         this.tanggalSampai +
         ".csv";
       a.click();
+      this.$store.dispatch("Absen/absen");
+      this.downloading = false;
+      // tutup Loader
+      this.$store.dispatch("Modal/loading", "close");
     },
   },
   components: {
