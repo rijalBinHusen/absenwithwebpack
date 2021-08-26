@@ -227,10 +227,10 @@ export default {
 
       var a = document.createElement("a");
       var file = new Blob([result], {
-        type: "text/plain",
+        type: "application/vnd.ms-excel",
       });
       a.href = URL.createObjectURL(file);
-      a.download = "fileName.csv";
+      a.download = this.tanggalMulai + " sampai " + this.tanggalSampai + ".csv";
       a.click();
     },
   },
