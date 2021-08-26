@@ -57,7 +57,11 @@ const ExIm = {
       let bagian = mydb.getData({ store: "bagian" });
       let level = mydb.getData({ store: "level" });
       let karyawan = mydb.getData({ store: "karyawan" });
-      let absen = mydb.getData({ store: "absen" });
+      let absen = mydb.getData({
+        store: "absen",
+        orderBy: "tanggal",
+        desc: true,
+      });
       let impor = mydb.getData({
         store: "import",
         orderBy: "time",
@@ -188,6 +192,11 @@ const ExIm = {
     //all data collect
     exportDataCollect(state) {
       return state.exportDataCollect;
+    },
+    exportDataCollectName(state) {
+      let first = state.exportDataCollect["absen"].slice(-1)[0].tanggal;
+      let last = state.exportDataCollect["absen"].slice(0, 1)[0].tanggal;
+      return first + " sampai " + last;
     },
   },
 };

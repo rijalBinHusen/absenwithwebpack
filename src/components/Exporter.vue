@@ -68,7 +68,7 @@ export default {
         }
       );
       a.href = URL.createObjectURL(file);
-      a.download = fileName;
+      a.download = this.$store.getters["ExIm/exportDataCollectName"] + ".js";
       a.click();
       //destroy data collect
       this.$store.dispatch("ExIm/destroyDataCollect");
