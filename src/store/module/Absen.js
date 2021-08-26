@@ -22,9 +22,11 @@ const Absen = {
       state.absen = [];
     },
     push(state, val) {
-      val.forEach((val) => {
-        state.absen.push(val);
-      });
+      val
+        ? val.forEach((val) => {
+            state.absen.push(val);
+          })
+        : false;
     },
     hapus(state, id) {
       let inde = state.absen.findIndex((val) => val.id === id);

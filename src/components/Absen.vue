@@ -64,7 +64,7 @@
       :id="'table_absen'"
     />
 
-    <Dialog v-if="dialog" @del="del($event)" />
+    <Dialog v-if="dialog" :danger="danger" @del="del($event)" />
   </div>
 </template>
 
@@ -113,6 +113,7 @@ export default {
       tanggalMulai: "",
       tanggalSampai: "",
       dialog: false,
+      danger: false,
     };
   },
   computed: {
@@ -181,10 +182,12 @@ export default {
       }
       //jika 2 tanggal tidak sama
       else {
-        this.$store.dispatch(
-          "Absen/tanggal",
-          this.getDaysArray(this.tanggalMulai, this.tanggalSampai)
-        );
+        this.getDaysArray(this.tanggalMulai, this.tanggalSampai).length < 8
+          ? this.$store.dispatch(
+              "Absen/tanggal",
+              this.getDaysArray(this.tanggalMulai, this.tanggalSampai)
+            )
+          : this.del("danger");
       }
     },
     getDaysArray(start, end) {
@@ -201,9 +204,14 @@ export default {
     del(val) {
       if (val === "cancel") {
         this.dialog = false;
+        this.danger = "";
       } else if (val === "yes") {
         this.$store.dispatch("Absen/hapus", this.dialog);
         this.dialog = false;
+      } else if (val === "danger") {
+        this.danger =
+          "Mohon Maaf, demi kelancaran aplikasi, kami tidak dapat menampilkan data lebih dari 7 hari, data yang melebihi periode tersebut hanya bisa didownload!";
+        this.dialog = true;
       } else {
         this.dialog = val;
       }
