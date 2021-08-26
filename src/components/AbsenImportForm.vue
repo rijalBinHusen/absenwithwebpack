@@ -31,7 +31,7 @@ export default {
       setTimeout(() => {
         this.$store.dispatch("Modal/loading", "close");
         this.$store.dispatch("Absen/absen");
-      }, 1500 * ev.target.files.length);
+      }, 500 * ev.target.files.length);
 
       for (let i = 0; i < ev.target.files.length; i++) {
         this.impor(ev.target.files[i]);

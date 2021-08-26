@@ -230,7 +230,12 @@ export default {
         type: "application/vnd.ms-excel",
       });
       a.href = URL.createObjectURL(file);
-      a.download = this.tanggalMulai + " sampai " + this.tanggalSampai + ".csv";
+      a.download =
+        "Absensi " +
+        this.tanggalMulai +
+        " sampai " +
+        this.tanggalSampai +
+        ".csv";
       a.click();
     },
   },

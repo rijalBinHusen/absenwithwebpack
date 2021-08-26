@@ -96,7 +96,7 @@ const ExIm = {
     },
     //destroy all data after collect
     destroyDataCollect(state) {
-      state.exportDataCollect = "";
+      state.exportDataCollect = {};
     },
     empty(state) {
       state.exportData = [];
@@ -170,9 +170,7 @@ const ExIm = {
       importProgress.then(() => {
         dispatch("importAppend", "imported");
         dispatch("getAllData");
-        setTimeout(() => {
-          dispatch("Modal/loading", "close", { root: true });
-        }, 2500 * Object.keys(val).length);
+        dispatch("Modal/loading", "close", { root: true });
       });
     },
   },
