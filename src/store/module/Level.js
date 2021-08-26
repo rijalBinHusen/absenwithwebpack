@@ -25,7 +25,7 @@ const Level = {
   actions: {
     tambah({ dispatch, commit }, val) {
       val.id
-        ? commit("tambah", val)
+        ? mydb.append("level", val)
         : mydb
             .getData({ store: "level", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {

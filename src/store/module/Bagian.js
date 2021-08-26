@@ -28,7 +28,7 @@ const Bagian = {
   actions: {
     tambah({ dispatch, commit }, val) {
       val.id
-        ? commit("tambah", val)
+        ? mydb.append("bagian", val)
         : mydb
             .getData({ store: "bagian", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {

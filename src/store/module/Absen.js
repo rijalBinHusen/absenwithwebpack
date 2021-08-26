@@ -35,7 +35,7 @@ const Absen = {
     // eslint-disable-next-line no-unused-vars
     tambah({ dispatch, commit }, val) {
       val.id
-        ? commit("tambah", val)
+        ? mydb.append("absen", val)
         : mydb
             .getData({ store: "absen", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {

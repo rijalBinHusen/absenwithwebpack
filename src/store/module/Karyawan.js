@@ -25,7 +25,7 @@ const Karyawan = {
   actions: {
     tambah({ dispatch, commit }, val) {
       val.id
-        ? commit("tambah", val)
+        ? mydb.append("karyawan", val)
         : mydb
             .getData({
               store: "karyawan",

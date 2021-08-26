@@ -27,7 +27,7 @@ const Divisi = {
   actions: {
     tambah({ dispatch, commit }, val) {
       val.id
-        ? commit("tambah", val)
+        ? mydb.append("divisi", val)
         : mydb
             .getData({ store: "divisi", orderBy: "id", desc: true, limit: 1 })
             .then((res) => {
