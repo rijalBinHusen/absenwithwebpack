@@ -50,7 +50,7 @@ export default {
   methods: {
     send() {
       //check what mode, update or add
-      this.leve.id
+      this.level.id
         ? //if mode is update
           this.$store.dispatch("Level/update", this.level)
         : //if mode is add
