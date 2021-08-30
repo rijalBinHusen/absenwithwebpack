@@ -28,12 +28,14 @@
     <div class="w3-xlarge w3-border">
       Dari tanggal :
       <input
+        :value="tanggalMulai"
         @change="tanggalMulai = $event.target.value"
         class="w3-button w3-large w3-white w3-hover-white"
         type="date"
       />
       Sampai tanggal :
       <input
+        :value="tanggalSampai"
         @change="tanggalSampai = $event.target.value"
         class="w3-button w3-large w3-white w3-hover-white"
         type="date"
@@ -111,8 +113,12 @@ export default {
             "selisih",
             "keterangan",
           ],
-      tanggalMulai: "",
-      tanggalSampai: "",
+      tanggalMulai: localStorage.getItem("tanggalMulai")
+        ? localStorage.getItem("tanggalMulai")
+        : "",
+      tanggalSampai: localStorage.getItem("tanggalSampai")
+        ? localStorage.getItem("tanggalSampai")
+        : "",
       dialog: false,
       danger: false,
       downloading: false,
@@ -178,6 +184,8 @@ export default {
       return Number(Apulang) - (Number(Amasuk) + 1) - istirahat;
     },
     tampilkan() {
+      localStorage.setItem("tanggalMulai", this.tanggalMulai);
+      localStorage.setItem("tanggalSampai", this.tanggalSampai);
       //jika 2 tanggal sama
       if (this.tanggalMulai == this.tanggalSampai) {
         this.$store.dispatch("Absen/tanggal", { tanggal: this.tanggalMulai });
@@ -219,14 +227,19 @@ export default {
       }
     },
     startDownload() {
+      localStorage.setItem("tanggalMulai", this.tanggalMulai);
+      localStorage.setItem("tanggalSampai", this.tanggalSampai);
       //buka loader
       this.$store.dispatch("Modal/loading", "open");
       this.downloading = true;
       let jumlah = this.getDaysArray(this.tanggalMulai, this.tanggalSampai);
       this.$store.dispatch("Absen/tanggal", jumlah);
-      setTimeout(() => {
-        this.download();
-      }, 300 * jumlah.length);
+      setTimeout(
+        () => {
+          this.download();
+        },
+        jumlah.length > 1 ? 300 * jumlah.length : 1500
+      );
     },
     download() {
       let result = "";
