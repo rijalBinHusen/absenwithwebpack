@@ -41,7 +41,7 @@ library.add(
   faCalendar,
   faClock,
   faBed,
-  faThumbtack,
+  faThumbtack
 );
 
 createApp(App)

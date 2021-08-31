@@ -64,7 +64,11 @@
       </tr>
       <!--end ofsearch form-->
 
-      <tr class="w3-hover-light-gray w3-border" :key="r" v-for="(r, index) in showRow">
+      <tr
+        class="w3-hover-light-gray w3-border"
+        :key="r"
+        v-for="(r, index) in showRow"
+      >
         <th>{{ index + deData.startRow + 1 }}</th>
         <td :key="r[key]" v-for="key in heads">{{ r[key] }}</td>
 
