@@ -97,4 +97,9 @@ export default {
     //DIV0001
     return masterId + length + increment;
   },
+  tunggu(time) {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve(), time);
+    });
+  },
 };

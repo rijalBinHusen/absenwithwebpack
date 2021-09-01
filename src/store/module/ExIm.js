@@ -146,32 +146,26 @@ const ExIm = {
       commit("empty");
     },
     //import data from importer to indexeddb
-    importerData({ dispatch, commit }, val) {
-      // /make import progress is promise
-      let importProgress = new Promise((resolve) => {
-        Object.keys(val).map((keys, index) => {
-          if (keys !== "status") {
-            val[keys].map((valImport) => {
-              if (keys == "import" || keys == "export") {
-                commit(keys + "Append", valImport);
-              } else {
-                dispatch(
-                  keys.charAt(0).toUpperCase().concat(keys.slice(1)) +
-                    "/tambah",
-                  valImport,
-                  { root: true }
-                );
-              }
-            });
-          }
-          if (index + 1 == Object.keys(val).length) resolve();
-        });
-      });
-      importProgress.then(() => {
-        dispatch("importAppend", "imported");
-        dispatch("getAllData");
-        dispatch("Modal/loading", "close", { root: true });
-      });
+    async importerData({ dispatch, commit }, val) {
+      // count keys length of object (store) to import
+      let rootKeys = Object.keys(val);
+      // iterate the keys of object (store)
+      for (let iKeys = 0; iKeys < rootKeys.length; iKeys++) {
+        // initiate name of keys
+        await mydb.tunggu(1500);
+        let keys = rootKeys[iKeys];
+        // if keys not status
+        if (keys !== "status") {
+          mydb.reWrite(keys, val[keys]);
+        }
+        if (iKeys + 1 === rootKeys.length) {
+          await mydb.tunggu(val["absen"].length * 5);
+          dispatch("importAppend", "imported");
+          dispatch("getAllData");
+          await mydb.tunggu(3000);
+          dispatch("Modal/loading", "close", { root: true });
+        }
+      } //end of for keys
     },
   },
   getters: {
