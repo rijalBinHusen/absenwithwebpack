@@ -152,20 +152,20 @@ const ExIm = {
       // iterate the keys of object (store)
       for (let iKeys = 0; iKeys < rootKeys.length; iKeys++) {
         // initiate name of keys
-        await mydb.tunggu(1500);
         let keys = rootKeys[iKeys];
         // if keys not status
         if (keys !== "status") {
           mydb.reWrite(keys, val[keys]);
         }
-        if (iKeys + 1 === rootKeys.length) {
-          await mydb.tunggu(val["absen"].length * 5);
-          dispatch("importAppend", "imported");
-          dispatch("getAllData");
-          await mydb.tunggu(3000);
-          dispatch("Modal/loading", "close", { root: true });
-        }
+        // if (iKeys + 1 === rootKeys.length) {
+        val[keys].length < 100 ? await mydb.tunggu(1500) : await mydb.tunggu(val[keys].length * 5)
+        //   await mydb.tunggu(val["absen"].length * 9);
+        //   await mydb.tunggu(3000);
+        // }
       } //end of for keys
+      await mydb.tunggu(3500)
+      dispatch("importAppend", "imported");
+      location.reload();
     },
   },
   getters: {

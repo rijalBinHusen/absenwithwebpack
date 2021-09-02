@@ -33,7 +33,7 @@
       <li
         :class="[impor.status == 'imported' ? '' : 'w3-hide']"
         v-for="impor in importData"
-        :key="impor.status"
+        :key="impor.time"
       >
         {{ new Date(impor.time) }}
       </li>
